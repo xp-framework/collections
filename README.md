@@ -11,3 +11,20 @@ Collections
 
 Generic collections for the XP Framework
 
+API
+---
+```php
+package util.collections {
+  public interface util.collections.IList<T>
+  public interface util.collections.Map<K, V>
+  public interface util.collections.Set<T>
+
+  public class util.collections.HashSet<T>
+  public class util.collections.HashTable<K, V>
+  public class util.collections.LRUBuffer<T>
+  public class util.collections.Pair<K, V>
+  public class util.collections.Queue<T>
+  public class util.collections.Stack<T>
+  public class util.collections.Vector<T>
+}
+```
