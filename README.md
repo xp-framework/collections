@@ -33,6 +33,8 @@ Example: HashTable
 ------------------
 ```php
 $map= create('new util.collections.HashTable<string, com.example.Customer>');
+$empty= $map->isEmpty();
+$size= $map->size();
 
 // Write values
 $map['@example']= new Customer(0, 'Example customer');
@@ -58,7 +60,46 @@ unset($map['@example']);
 $map->remove('@example');
 
 // Iteration
-foreach ($customer as $pair) {
+foreach ($map as $pair) {
   echo $pair->key, ': ', $pair->value->toString(), "\n";
+}
+```
+
+Example: Vector
+---------------
+```php
+$list= create('new util.collections.Vector<com.example.Customer>');
+$empty= $list->isEmpty();
+$size= $list->size();
+
+// Write values
+$list[]= new Customer(0, 'Example customer');
+$list->add(new Customer(1, 'Timm Friebe'));
+
+$list[0]= new Customer(0, 'Example customer');
+$list->set(1, new Customer(1, 'Timm Friebe'));
+
+// Raises an exception
+$list[0]= new Date();
+
+// Access
+$customer= $list[0];
+$customer= $list->get(0);
+
+// Test
+if (isset($list[1])) {
+  // ...
+}
+
+// Will return NULL
+$customer= $list[1];
+
+// Remove
+unset($list[1]);
+$list->remove(1);
+
+// Iteration
+foreach ($list as $customer) {
+  echo $customer->toString(), "\n";
 }
 ```
