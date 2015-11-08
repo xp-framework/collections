@@ -36,16 +36,26 @@ $map= create('new util.collections.HashTable<string, com.example.Customer>');
 
 // Write values
 $map['@example']= new Customer(0, 'Example customer');
-$map['@friebe']= new Customer(1, 'Timm Friebe');
+$map->put('@friebe', new Customer(1, 'Timm Friebe'));
 
 // Raises an exception
 $map['@invalid']= new Date();
 
 // Access
 $customer= $map['@example'];
+$customer= $map->get('@example');
+
+// Test
+if (isset($map['@example'])) {
+  // ...
+}
 
 // Will return NULL
 $customer= $map['@nonexistant'];
+
+// Remove
+unset($map['@example']);
+$map->remove('@example');
 
 // Iteration
 foreach ($customer as $pair) {
