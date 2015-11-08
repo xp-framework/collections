@@ -7,7 +7,6 @@ use util\collections\Stack;
 use util\collections\Queue;
 use util\collections\LRUBuffer;
 use lang\types\Integer;
-use lang\types\String;
 use lang\IllegalArgumentException;
 
 /**
@@ -26,15 +25,15 @@ class GenericsTest extends \unittest\TestCase {
   public function differingGenericHashTablesNotEquals() {
     $this->assertNotEquals(
       create('new util.collections.HashTable<lang.Object, lang.Object>'),
-      create('new util.collections.HashTable<lang.types.String, lang.Object>')
+      create('new util.collections.HashTable<util.collections.unittest.Name, lang.Object>')
     );
   }
 
   #[@test]
   public function sameGenericHashTablesAreEqual() {
     $this->assertEquals(
-      create('new util.collections.HashTable<lang.types.String, lang.Object>'),
-      create('new util.collections.HashTable<lang.types.String, lang.Object>')
+      create('new util.collections.HashTable<util.collections.unittest.Name, lang.Object>'),
+      create('new util.collections.HashTable<util.collections.unittest.Name, lang.Object>')
     );
   }
 
@@ -42,15 +41,15 @@ class GenericsTest extends \unittest\TestCase {
   public function differingGenericHashSetsNotEquals() {
     $this->assertNotEquals(
       create('new util.collections.HashSet<lang.Object>'),
-      create('new util.collections.HashSet<lang.types.String>')
+      create('new util.collections.HashSet<util.collections.unittest.Name>')
     );
   }
 
   #[@test]
   public function sameGenericHashSetsAreEqual() {
     $this->assertEquals(
-      create('new util.collections.HashSet<lang.types.String>'),
-      create('new util.collections.HashSet<lang.types.String>')
+      create('new util.collections.HashSet<util.collections.unittest.Name>'),
+      create('new util.collections.HashSet<util.collections.unittest.Name>')
     );
   }
 
@@ -58,15 +57,15 @@ class GenericsTest extends \unittest\TestCase {
   public function differingGenericVectorsNotEquals() {
     $this->assertNotEquals(
       create('new util.collections.Vector<lang.Object>'),
-      create('new util.collections.Vector<lang.types.String>')
+      create('new util.collections.Vector<util.collections.unittest.Name>')
     );
   }
 
   #[@test]
   public function sameGenericVectorsAreEqual() {
     $this->assertEquals(
-      create('new util.collections.Vector<lang.types.String>'),
-      create('new util.collections.Vector<lang.types.String>')
+      create('new util.collections.Vector<util.collections.unittest.Name>'),
+      create('new util.collections.Vector<util.collections.unittest.Name>')
     );
   }
 
@@ -74,15 +73,15 @@ class GenericsTest extends \unittest\TestCase {
   public function differingGenericQueuesNotEquals() {
     $this->assertNotEquals(
       create('new util.collections.Queue<lang.Object>'),
-      create('new util.collections.Queue<lang.types.String>')
+      create('new util.collections.Queue<util.collections.unittest.Name>')
     );
   }
 
   #[@test]
   public function sameGenericQueuesAreEqual() {
     $this->assertEquals(
-      create('new util.collections.Queue<lang.types.String>'),
-      create('new util.collections.Queue<lang.types.String>')
+      create('new util.collections.Queue<util.collections.unittest.Name>'),
+      create('new util.collections.Queue<util.collections.unittest.Name>')
     );
   }
 
@@ -90,15 +89,15 @@ class GenericsTest extends \unittest\TestCase {
   public function differingGenericStacksNotEquals() {
     $this->assertNotEquals(
       create('new util.collections.Stack<lang.Object>'),
-      create('new util.collections.Stack<lang.types.String>')
+      create('new util.collections.Stack<util.collections.unittest.Name>')
     );
   }
 
   #[@test]
   public function sameGenericStacksAreEqual() {
     $this->assertEquals(
-      create('new util.collections.Stack<lang.types.String>'),
-      create('new util.collections.Stack<lang.types.String>')
+      create('new util.collections.Stack<util.collections.unittest.Name>'),
+      create('new util.collections.Stack<util.collections.unittest.Name>')
     );
   }
 
@@ -106,168 +105,168 @@ class GenericsTest extends \unittest\TestCase {
   public function differingGenericLRUBuffersNotEquals() {
     $this->assertNotEquals(
       create('new util.collections.LRUBuffer<lang.Object>', [10]),
-      create('new util.collections.LRUBuffer<lang.types.String>', [10])
+      create('new util.collections.LRUBuffer<util.collections.unittest.Name>', [10])
     );
   }
 
   #[@test]
   public function sameGenericLRUBuffersAreEqual() {
     $this->assertEquals(
-      create('new util.collections.LRUBuffer<lang.types.String>', [10]),
-      create('new util.collections.LRUBuffer<lang.types.String>', [10])
+      create('new util.collections.LRUBuffer<util.collections.unittest.Name>', [10]),
+      create('new util.collections.LRUBuffer<util.collections.unittest.Name>', [10])
     );
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function nonGenericPassedToCreate() {
-    create('new lang.Object<lang.types.String>');
+    create('new lang.Object<util.collections.unittest.Name>');
   }
 
   #[@test]
   public function stringVector() {
-    create('new util.collections.Vector<lang.types.String>')->add(new \lang\types\String('Hi'));
+    create('new util.collections.Vector<util.collections.unittest.Name>')->add(new Name('Hi'));
   }
 
   #[@test]
   public function createStringVector() {
     $this->assertEquals(
-      new \lang\types\String('one'), 
-      create('new util.collections.Vector<lang.types.String>', [new \lang\types\String('one')])->get(0)
+      new Name('one'), 
+      create('new util.collections.Vector<util.collections.unittest.Name>', [new Name('one')])->get(0)
     );
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function stringVectorAddIllegalValue() {
-    create('new util.collections.Vector<lang.types.String>')->add(new \lang\types\Integer(1));
+    create('new util.collections.Vector<util.collections.unittest.Name>')->add(new Integer(1));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function stringVectorSetIllegalValue() {
-    create('new util.collections.Vector<lang.types.String>', [new \lang\types\String('')])->set(0, new \lang\types\Integer(1));
+    create('new util.collections.Vector<util.collections.unittest.Name>', [new Name('')])->set(0, new Integer(1));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function stringVectorContainsIllegalValue() {
-    create('new util.collections.Vector<lang.types.String>')->contains(new \lang\types\Integer(1));
+    create('new util.collections.Vector<util.collections.unittest.Name>')->contains(new Integer(1));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function createStringVectorWithIllegalValue() {
-    create('new util.collections.Vector<lang.types.String>', [new \lang\types\Integer(1)]);
+    create('new util.collections.Vector<util.collections.unittest.Name>', [new Integer(1)]);
   }
 
   #[@test]
   public function stringStack() {
-    create('new util.collections.Stack<lang.types.String>')->push(new \lang\types\String('One'));
+    create('new util.collections.Stack<util.collections.unittest.Name>')->push(new Name('One'));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function stringStackPushIllegalValue() {
-    create('new util.collections.Stack<lang.types.String>')->push(new \lang\types\Integer(1));
+    create('new util.collections.Stack<util.collections.unittest.Name>')->push(new Integer(1));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function stringStackSearchIllegalValue() {
-    create('new util.collections.Stack<lang.types.String>')->search(new \lang\types\Integer(1));
+    create('new util.collections.Stack<util.collections.unittest.Name>')->search(new Integer(1));
   }
 
   #[@test]
   public function stringQueue() {
-    create('new util.collections.Queue<lang.types.String>')->put(new \lang\types\String('One'));
+    create('new util.collections.Queue<util.collections.unittest.Name>')->put(new Name('One'));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function stringQueuePutIllegalValue() {
-    create('new util.collections.Queue<lang.types.String>')->put(new \lang\types\Integer(1));
+    create('new util.collections.Queue<util.collections.unittest.Name>')->put(new Integer(1));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function stringQueueSearchIllegalValue() {
-    create('new util.collections.Queue<lang.types.String>')->search(new \lang\types\Integer(1));
+    create('new util.collections.Queue<util.collections.unittest.Name>')->search(new Integer(1));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function stringQueueRemoveIllegalValue() {
-    create('new util.collections.Queue<lang.types.String>')->remove(new \lang\types\Integer(1));
+    create('new util.collections.Queue<util.collections.unittest.Name>')->remove(new Integer(1));
   }
 
   #[@test]
   public function stringLRUBuffer() {
-    create('new util.collections.LRUBuffer<lang.types.String>', 1)->add(new \lang\types\String('One'));
+    create('new util.collections.LRUBuffer<util.collections.unittest.Name>', 1)->add(new Name('One'));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function stringLRUBufferAddIllegalValue() {
-    create('new util.collections.LRUBuffer<lang.types.String>', 1)->add(new \lang\types\Integer(1));
+    create('new util.collections.LRUBuffer<util.collections.unittest.Name>', 1)->add(new Integer(1));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function stringLRUBufferUpdateIllegalValue() {
-    create('new util.collections.LRUBuffer<lang.types.String>', 1)->update(new \lang\types\Integer(1));
+    create('new util.collections.LRUBuffer<util.collections.unittest.Name>', 1)->update(new Integer(1));
   }
 
   #[@test]
   public function stringHashSet() {
-    create('new util.collections.HashSet<lang.types.String>')->add(new \lang\types\String('One'));
+    create('new util.collections.HashSet<util.collections.unittest.Name>')->add(new Name('One'));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function stringHashSetAddIllegalValue() {
-    create('new util.collections.HashSet<lang.types.String>')->add(new \lang\types\Integer(1));
+    create('new util.collections.HashSet<util.collections.unittest.Name>')->add(new Integer(1));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function stringHashSetContainsIllegalValue() {
-    create('new util.collections.HashSet<lang.types.String>')->contains(new \lang\types\Integer(1));
+    create('new util.collections.HashSet<util.collections.unittest.Name>')->contains(new Integer(1));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function stringHashSetRemoveIllegalValue() {
-    create('new util.collections.HashSet<lang.types.String>')->remove(new \lang\types\Integer(1));
+    create('new util.collections.HashSet<util.collections.unittest.Name>')->remove(new Integer(1));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function stringHashSetAddAllIllegalValue() {
-    create('new util.collections.HashSet<lang.types.String>')->addAll([
-      new \lang\types\String('HELLO'),    // Still OK
-      new \lang\types\Integer(2),         // Blam
+    create('new util.collections.HashSet<util.collections.unittest.Name>')->addAll([
+      new Name('HELLO'),    // Still OK
+      new Integer(2),         // Blam
     ]);
   }
 
   #[@test]
   public function stringHashSetUnchangedAferAddAllIllegalValue() {
-    $h= create('new util.collections.HashSet<lang.types.String>');
+    $h= create('new util.collections.HashSet<util.collections.unittest.Name>');
     try {
-      $h->addAll([new \lang\types\String('HELLO'), new \lang\types\Integer(2)]);
-    } catch (\lang\IllegalArgumentException $expected) {
+      $h->addAll([new Name('HELLO'), new Integer(2)]);
+    } catch (IllegalArgumentException $expected) {
     }
     $this->assertTrue($h->isEmpty());
   }
 
   #[@test]
   public function arrayAsKeyLookupWithMatchingKey() {
-    with ($h= create('new util.collections.HashTable<string[], lang.types.String>')); {
-      $h->put(['hello'], new \lang\types\String('World'));
-      $this->assertEquals(new \lang\types\String('World'), $h->get(['hello']));
+    with ($h= create('new util.collections.HashTable<string[], util.collections.unittest.Name>')); {
+      $h->put(['hello'], new Name('World'));
+      $this->assertEquals(new Name('World'), $h->get(['hello']));
     }
   }
 
   #[@test]
   public function arrayAsKeyLookupWithMismatchingKey() {
-    with ($h= create('new util.collections.HashTable<string[], lang.types.String>')); {
-      $h->put(['hello'], new \lang\types\String('World'));
+    with ($h= create('new util.collections.HashTable<string[], util.collections.unittest.Name>')); {
+      $h->put(['hello'], new Name('World'));
       $this->assertNull($h->get(['world']));
     }
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function arrayAsKeyArrayComponentTypeMismatch() {
-    create('new util.collections.HashTable<string[], lang.types.String>')->put([1], new \lang\types\String('World'));
+    create('new util.collections.HashTable<string[], util.collections.unittest.Name>')->put([1], new Name('World'));
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function arrayAsKeyTypeMismatch() {
-    create('new util.collections.HashTable<string[], lang.types.String>')->put('hello', new \lang\types\String('World'));
+    create('new util.collections.HashTable<string[], util.collections.unittest.Name>')->put('hello', new Name('World'));
   }
 
   /**
