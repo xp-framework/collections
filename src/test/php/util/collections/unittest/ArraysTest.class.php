@@ -2,7 +2,6 @@
 
 use unittest\TestCase;
 use lang\types\Integer;
-use lang\types\Float;
 use lang\types\ArrayList;
 use util\collections\Arrays;
 use util\collections\IList;
@@ -78,6 +77,6 @@ class ArraysTest extends TestCase {
     $a= new ArrayList(new Integer(1), new Integer(2), new Integer(3));
     $this->assertTrue(Arrays::contains($a, new Integer(1)));
     $this->assertFalse(Arrays::contains($a, new Integer(5)));
-    $this->assertFalse(Arrays::contains($a, new Float(1.0)));
+    $this->assertFalse(Arrays::contains($a, new Name('test')));
   }
 }
