@@ -28,3 +28,27 @@ package util.collections {
   public class util.collections.Vector<T>
 }
 ```
+
+Example: HashTable
+------------------
+```php
+$map= create('new util.collections.HashTable<string, com.example.Customer>');
+
+// Write values
+$map['@example']= new Customer(0, 'Example customer');
+$map['@friebe']= new Customer(1, 'Timm Friebe');
+
+// Raises an exception
+$map['@invalid']= new Date();
+
+// Access
+$customer= $map['@example'];
+
+// Will return NULL
+$customer= $map['@nonexistant'];
+
+// Iteration
+foreach ($customer as $pair) {
+  echo $pair->key, ': ', $pair->value->toString(), "\n";
+}
+```
