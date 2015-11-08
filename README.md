@@ -103,3 +103,10 @@ foreach ($list as $customer) {
   echo $customer->toString(), "\n";
 }
 ```
+
+Further reading
+---------------
+* [RFC #0193: Generics optimization](https://github.com/xp-framework/rfc/issues/193)
+* [RFC #0106: Array access / iteration / type boxing / generics](https://github.com/xp-framework/rfc/issues/106)
+* [HHVM: Hack Language Reference: Generic](http://docs.hhvm.com/manual/en/hack.generics.php)
+* [PHP RFC: Introduce generics into PHP](https://wiki.php.net/rfc/generics)
