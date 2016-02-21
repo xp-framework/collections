@@ -2,10 +2,10 @@
  
 use util\collections\HashTable;
 use util\collections\Pair;
-use lang\types\Integer;
-use lang\types\Double;
 use lang\Object;
 use lang\IllegalArgumentException;
+use util\Money;
+use util\Currency;
 
 /**
  * Test HashTable class
@@ -23,15 +23,15 @@ class HashTableTest extends \unittest\TestCase {
       ]],
       [new HashTable(), [
         new Pair(new Name('color'), new Name('green')),
-        new Pair(new Name('price'), new Double(12.99))
+        new Pair(new Name('price'), new Money(12.99, Currency::$EUR))
       ]],
       [create('new util.collections.HashTable<string, util.collections.unittest.Name>'), [
         new Pair('hello', new Name('World')),
         new Pair('hallo', new Name('Welt'))
       ]],
-      [create('new util.collections.HashTable<lang.types.Integer, string[]>'), [
-        new Pair(new Integer(1), ['one', 'eins']),
-        new Pair(new Integer(2), ['two', 'zwei'])
+      [create('new util.collections.HashTable<util.collections.unittest.Name, string[]>'), [
+        new Pair(new Name('1'), ['one', 'eins']),
+        new Pair(new Name('2'), ['two', 'zwei'])
       ]],
       [create('new util.collections.HashTable<int[], var>'), [
         new Pair([1, 2], 3),
@@ -124,7 +124,7 @@ class HashTableTest extends \unittest\TestCase {
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function put_illegal_type_in_value() {
-    create('new util.collections.HashTable<string, util.collections.unittest.Name>')->put('hello', new Integer(1));
+    create('new util.collections.HashTable<string, util.collections.unittest.Name>')->put('hello', $this);
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
@@ -161,7 +161,7 @@ class HashTableTest extends \unittest\TestCase {
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function get_illegal_type_in_argument() {
-    create('new util.collections.HashTable<util.collections.unittest.Name, util.collections.unittest.Name>')->get(new Integer(1));
+    create('new util.collections.HashTable<util.collections.unittest.Name, util.collections.unittest.Name>')->get($this);
   }
 
   #[@test, @values('fixtures')]
@@ -188,7 +188,7 @@ class HashTableTest extends \unittest\TestCase {
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function containsKey_illegal_type_in_argument() {
-    create('new util.collections.HashTable<util.collections.unittest.Name, util.collections.unittest.Name>')->containsKey(new Integer(1));
+    create('new util.collections.HashTable<util.collections.unittest.Name, util.collections.unittest.Name>')->containsKey($this);
   }
 
   #[@test, @values('fixtures')]
@@ -204,7 +204,7 @@ class HashTableTest extends \unittest\TestCase {
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function containsValue_illegal_type_in_argument() {
-    create('new util.collections.HashTable<util.collections.unittest.Name, util.collections.unittest.Name>')->containsValue(new Integer(1));
+    create('new util.collections.HashTable<util.collections.unittest.Name, util.collections.unittest.Name>')->containsValue($this);
   }
 
   #[@test, @values('fixtures')]
@@ -241,7 +241,7 @@ class HashTableTest extends \unittest\TestCase {
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function remove_illegal_type_in_argument() {
-    create('new util.collections.HashTable<util.collections.unittest.Name, util.collections.unittest.Name>')->remove(new Integer(1));
+    create('new util.collections.HashTable<util.collections.unittest.Name, util.collections.unittest.Name>')->remove($this);
   }
 
   #[@test, @values('fixtures')]

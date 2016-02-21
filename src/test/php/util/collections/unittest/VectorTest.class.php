@@ -3,7 +3,6 @@
 use lang\Object;
 use lang\IllegalArgumentException;
 use lang\IndexOutOfBoundsException;
-use lang\types\ArrayList;
 use util\collections\Vector;
 
 /**
@@ -55,9 +54,9 @@ class VectorTest extends \unittest\TestCase {
   }
 
   #[@test]
-  public function addAllArrayList() {
+  public function addAllArrayObject() {
     $v= new Vector();
-    $this->assertTrue($v->addAll(new ArrayList(new Object(), new Object())));
+    $this->assertTrue($v->addAll(new \ArrayObject([new Object(), new Object()])));
     $this->assertEquals(2, $v->size());
   }
 
@@ -72,8 +71,8 @@ class VectorTest extends \unittest\TestCase {
   }
 
   #[@test]
-  public function addAllEmptyArrayList() {
-    $this->assertFalse((new Vector())->addAll(new ArrayList()));
+  public function addAllEmptyArrayObject() {
+    $this->assertFalse((new Vector())->addAll(new \ArrayObject([])));
   }
 
   #[@test]
