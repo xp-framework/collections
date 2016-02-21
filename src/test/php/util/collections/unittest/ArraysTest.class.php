@@ -19,7 +19,7 @@ class ArraysTest extends TestCase {
   #[@beforeClass]
   public function verifyLangTypesPackage() {
     if (!ClassLoader::getDefault()->providesPackage('lang.types')) {
-      throw new PrerequisitesNotMetError('Tests cannot run, no lang.types package')
+      throw new PrerequisitesNotMetError('Tests cannot run, no lang.types package');
     }
   }
 
