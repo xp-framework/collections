@@ -8,6 +8,7 @@ use lang\Value;
 /**
  * Various methods for working with arrays.
  *
+ * @deprecated The lang.types.ArrayList class is deprecated, and has been removed in XP7
  * @test  xp://net.xp_framework.unittest.util.collections.ArraysTest
  * @see   xp://util.collections.IList
  * @see   xp://lang.types.ArrayList

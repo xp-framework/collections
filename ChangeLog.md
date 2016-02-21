@@ -7,6 +7,10 @@ Collections change log
 
 * **Adopted semantic versioning. See xp-framework/rfc#300** - @thekid 
 * Added version compatibility with XP 7 - @thekid
+* Deprecated util.collections.Arrays class as it relies on lang.types, which
+  has been removed in XP7. For the utility methods it provides, check the
+  [xp-forge/sequence](https://github.com/xp-forge/sequence) library.
+  (@thekid)
 
 ## 6.5.6 / 2015-11-08
 

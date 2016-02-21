@@ -1,11 +1,13 @@
 <?php namespace util\collections\unittest;
 
 use unittest\TestCase;
+use unittest\PrerequisitesNotMetError;
 use lang\types\Integer;
 use lang\types\ArrayList;
 use util\collections\Arrays;
 use util\collections\IList;
 use util\Comparator;
+use lang\ClassLoader;
 
 /**
  * TestCase
@@ -13,6 +15,13 @@ use util\Comparator;
  * @see   xp://util.collections.Arrays
  */
 class ArraysTest extends TestCase {
+
+  #[@beforeClass]
+  public function verifyLangTypesPackage() {
+    if (!ClassLoader::getDefault()->providesPackage('lang.types')) {
+      throw new PrerequisitesNotMetError('Tests cannot run, no lang.types package')
+    }
+  }
 
   #[@test]
   public function asList() {
