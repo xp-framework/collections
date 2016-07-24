@@ -3,6 +3,12 @@ Collections change log
 
 ## ?.?.? / ????-??-??
 
+## 7.1.0 / 2016-07-24
+
+* Dropped official support for PHP 5.5 - code will still work but is no
+  longer tested on Travis CI. This keeps XP6 compatibility.
+  (@thekid)
+
 ## 7.0.0 / 2016-02-21
 
 * **Adopted semantic versioning. See xp-framework/rfc#300** - @thekid 
