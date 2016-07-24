@@ -77,7 +77,7 @@ class VectorTest extends \unittest\TestCase {
 
   #[@test]
   public function unchangedAfterNullInAddAll() {
-    $v= create('new util.collections.Vector<Object>()');
+    $v= create('new util.collections.Vector<lang.Object>()');
     try {
       $v->addAll([new Object(), null]);
       $this->fail('addAll() did not throw an exception', null, 'lang.IllegalArgumentException');
@@ -99,7 +99,7 @@ class VectorTest extends \unittest\TestCase {
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function addingNull() {
-    create('new util.collections.Vector<Object>()')->add(null);
+    create('new util.collections.Vector<lang.Object>()')->add(null);
   }
 
   #[@test]
@@ -114,7 +114,7 @@ class VectorTest extends \unittest\TestCase {
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function replacingWithNull() {
-    create('new util.collections.Vector<Object>', [new Object()])->set(0, null);
+    create('new util.collections.Vector<lang.Object>', [new Object()])->set(0, null);
   }
 
   #[@test, @expect(IndexOutOfBoundsException::class)]
