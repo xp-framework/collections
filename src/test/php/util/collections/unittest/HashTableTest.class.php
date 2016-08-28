@@ -56,7 +56,7 @@ class HashTableTest extends \unittest\TestCase {
   protected function hashCodeCounter() {
     return newinstance(Object::class, [], [
       'invoked'  => 0,
-      'hashCode' => function() { $this->invoked++; }
+      'hashCode' => function() { $this->invoked++; return parent::hashCode(); }
     ]);
   }
 

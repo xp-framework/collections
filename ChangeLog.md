@@ -3,6 +3,12 @@ Collections change log
 
 ## ?.?.? / ????-??-??
 
+## 7.2.0 / 2016-08-28
+
+* Added forward compatibility with XP 8.0.0 by ensuring `hashCode()` 
+  always returns a string
+  (@thekid)
+
 ## 7.1.0 / 2016-07-24
 
 * Dropped official support for PHP 5.5 - code will still work but is no
