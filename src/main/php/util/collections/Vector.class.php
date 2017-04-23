@@ -55,10 +55,10 @@ class Vector extends \lang\Object implements IList {
    */
   #[@generic(params= ', T')]
   public function offsetSet($offset, $value) {
-    if (is_int($offset)) {
-      $this->set($offset, $value);
-    } else if (null === $offset) {
+    if (null === $offset) {
       $this->add($value);
+    } else if (is_int($offset)) {
+      $this->set($offset, $value);
     } else {
       throw new IllegalArgumentException('Incorrect type '.gettype($offset).' for index');
     }
