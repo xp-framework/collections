@@ -3,6 +3,8 @@ Collections change log
 
 ## ?.?.? / ????-??-??
 
+* Simplified code: Replaced anonymous iterator instances with `yield`
+  (@thekid)
 * Merged PR #1: Remove HashProvider and deprecate it.
   This speeds up HashTable, HashSet, Queue and Stack performance by a
   factor between 2 and 4, depending on the usecase.
