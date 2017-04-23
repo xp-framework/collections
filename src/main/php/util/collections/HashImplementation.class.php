@@ -3,6 +3,7 @@
 /**
  * Hash implementation
  *
+ * @deprecated
  * @see   xp://util.collections.HashProvider
  */
 interface HashImplementation {

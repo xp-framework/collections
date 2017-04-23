@@ -35,9 +35,7 @@ use util\Objects;
  */
 #[@generic(self= 'T')]
 class Stack extends \lang\Object {
-  protected
-    $_elements = [],
-    $_hash     = 0;
+  protected $_elements= [];
 
   /**
    * Pushes an item onto the top of the stack. Returns the element that 
@@ -48,9 +46,7 @@ class Stack extends \lang\Object {
    */
   #[@generic(params= 'T', return= 'T')]
   public function push($element) {
-    $h= Objects::hashOf($element);
     array_unshift($this->_elements, $element);
-    $this->_hash+= HashProvider::hashOf($h);
     return $element;
   }
 
@@ -66,8 +62,6 @@ class Stack extends \lang\Object {
       throw new NoSuchElementException('Stack is empty');
     }
     $element= array_shift($this->_elements);
-    $h= Objects::hashOf($element);
-    $this->_hash+= HashProvider::hashOf($h);
     return $element;
   }
 
@@ -136,16 +130,20 @@ class Stack extends \lang\Object {
    * @return  string
    */
   public function hashCode() {
-    return $this->_hash;
+    $hash= '';
+    foreach ($this->_elements as $element) {
+      $hash.= Objects::hashOf($element);
+    }
+    return md5($hash);
   }
   
   /**
    * Returns true if this queue equals another queue.
    *
-   * @param   lang.Generic cmp
+   * @param   var cmp
    * @return  bool
    */
   public function equals($cmp) {
-    return $cmp instanceof self && $this->_hash === $cmp->_hash;
+    return $cmp instanceof self && $this->hashCode() === $cmp->hashCode();
   }
 }

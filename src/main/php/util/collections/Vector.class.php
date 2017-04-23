@@ -316,7 +316,7 @@ class Vector extends \lang\Object implements IList {
   /**
    * Checks if a specified object is equal to this object.
    *
-   * @param   lang.Generic collection
+   * @param   var cmp
    * @return  bool
    */
   public function equals($cmp) {

@@ -31,6 +31,7 @@
  *
  * -- Ralf S. Engelschall
  *
+ * @deprecated
  * @see  xp://util.collections.HashProvider
  * @test xp://net.xp_framework.unittest.util.collections.DJBX33AHashImplementationTest:
  */

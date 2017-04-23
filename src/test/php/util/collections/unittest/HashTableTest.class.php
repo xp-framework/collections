@@ -87,13 +87,6 @@ class HashTableTest extends \unittest\TestCase {
     $this->assertEquals(1, $object->invoked);
   }
 
-  #[@test, @values('variations')]
-  public function put_uses_hashCode_for_values($fixture) {
-    $object= $this->hashCodeCounter();
-    $fixture->put($this, $object);
-    $this->assertEquals(1, $object->invoked);
-  }
-
   #[@test, @values('fixtures')]
   public function array_access_for_writing($fixture, $pairs) {
     $fixture[$pairs[0]->key]= $pairs[0]->value;

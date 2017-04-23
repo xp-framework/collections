@@ -15,12 +15,8 @@ use lang\Generic;
  */
 #[@generic(self= 'K, V', implements= ['K, V'])]
 class HashTable extends \lang\Object implements Map, \IteratorAggregate {
-  protected static
-    $iterate   = null;
-
-  protected
-    $_buckets  = [],
-    $_hash     = 0;
+  protected static $iterate= null;
+  protected $_buckets= [];
 
   static function __static() {
     self::$iterate= newinstance('Iterator', [], '{
@@ -109,7 +105,6 @@ class HashTable extends \lang\Object implements Map, \IteratorAggregate {
     }
 
     $this->_buckets[$h]= [$key, $value];
-    $this->_hash+= HashProvider::hashOf($h.Objects::hashOf($value));
     return $previous;
   }
 
@@ -141,7 +136,6 @@ class HashTable extends \lang\Object implements Map, \IteratorAggregate {
       $prev= null;
     } else {
       $prev= $this->_buckets[$h][1];
-      $this->_hash-= HashProvider::hashOf($h.Objects::hashOf($prev));
       unset($this->_buckets[$h]);
     }
 
@@ -155,7 +149,6 @@ class HashTable extends \lang\Object implements Map, \IteratorAggregate {
    */
   public function clear() {
     $this->_buckets= [];
-    $this->_hash= 0;
   }
 
   /**
@@ -218,7 +211,11 @@ class HashTable extends \lang\Object implements Map, \IteratorAggregate {
    * @return  string
    */
   public function hashCode() {
-    return $this->_hash;
+    $hash= '';
+    foreach ($this->_buckets as $key => $value) {
+      $hash.= $key.Objects::hashOf($value[1]);
+    }
+    return md5($hash);
   }
   
   /**
@@ -228,7 +225,7 @@ class HashTable extends \lang\Object implements Map, \IteratorAggregate {
    * @return  bool
    */
   public function equals($cmp) {
-    return $cmp instanceof self && $this->_hash === $cmp->_hash;
+    return $cmp instanceof self && $this->hashCode() === $cmp->hashCode();
   }
   
   /**
@@ -270,7 +267,7 @@ class HashTable extends \lang\Object implements Map, \IteratorAggregate {
 
     $s.= "\n";
     foreach ($this->_buckets as $b) {
-      $s.= '  '.\xp::stringOf($b[0]).' => '.\xp::stringOf($b[1]).",\n";
+      $s.= '  '.Objects::stringOf($b[0]).' => '.Objects::stringOf($b[1]).",\n";
     }
     return substr($s, 0, -2)."\n}";
   }

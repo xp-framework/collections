@@ -98,7 +98,6 @@ class HashSet extends \lang\Object implements Set {
     $h= Objects::hashOf($element);
     if (isset($this->_elements[$h])) return false;
     
-    $this->_hash+= HashProvider::hashOf($h);
     $this->_elements[$h]= $element;
     return true;
   }
@@ -114,7 +113,6 @@ class HashSet extends \lang\Object implements Set {
     $h= Objects::hashOf($element);
     if (!isset($this->_elements[$h])) return false;
 
-    $this->_hash-= HashProvider::hashOf($h);
     unset($this->_elements[$h]);
     return true;
   }
@@ -147,7 +145,6 @@ class HashSet extends \lang\Object implements Set {
    */
   public function clear() { 
     $this->_elements= [];
-    $this->_hash= 0;
   }
 
   /**
@@ -172,7 +169,6 @@ class HashSet extends \lang\Object implements Set {
       $h= Objects::hashOf($element);
       if (isset($this->_elements[$h])) continue;
 
-      $this->_hash+= HashProvider::hashOf($h);
       $this->_elements[$h]= $element;
       $changed= true;
     }
@@ -195,17 +191,21 @@ class HashSet extends \lang\Object implements Set {
    * @return  string
    */
   public function hashCode() {
-    return $this->_hash;
+    $hash= '';
+    foreach ($this->_elements as $element) {
+      $hash.= Objects::hashOf($element);
+    }
+    return md5($hash);
   }
   
   /**
    * Returns true if this set equals another set.
    *
-   * @param   lang.Generic cmp
+   * @param   var cmp
    * @return  bool
    */
   public function equals($cmp) {
-    return $cmp instanceof self && $this->_hash === $cmp->_hash;
+    return $cmp instanceof self && $this->hashCode() === $cmp->hashCode();
   }
 
   /**
@@ -219,7 +219,7 @@ class HashSet extends \lang\Object implements Set {
 
     $s.= "\n";
     foreach ($this->_elements as $e) {
-      $s.= '  '.\xp::stringOf($e).",\n";
+      $s.= '  '.Objects::stringOf($e).",\n";
     }
     return substr($s, 0, -2)."\n}";
   }

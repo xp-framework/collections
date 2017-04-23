@@ -34,9 +34,7 @@ use lang\Value;
  */
 #[@generic(self= 'T')]
 class Queue extends \lang\Object {
-  protected
-    $_elements = [],
-    $_hash     = 0;
+  protected $_elements= [];
 
   /**
    * Puts an item into the queue. Returns the element that was added.
@@ -46,9 +44,7 @@ class Queue extends \lang\Object {
    */
   #[@generic(params= 'T', return= 'T')]
   public function put($element) {
-    $h= Objects::hashOf($element);
     $this->_elements[]= $element;
-    $this->_hash+= HashProvider::hashOf($h);
     return $element;
   }
 
@@ -65,8 +61,6 @@ class Queue extends \lang\Object {
     }
 
     $element= $this->_elements[0];
-    $h= Objects::hashOf($element);
-    $this->_hash-= HashProvider::hashOf($h);
     $this->_elements= array_slice($this->_elements, 1);
     return $element;
   }
@@ -124,11 +118,8 @@ class Queue extends \lang\Object {
    */
   #[@generic(params= 'T')]
   public function remove($element) {
-    if (-1 == ($pos= $this->search($element))) return false;
+    if (-1 === ($pos= $this->search($element))) return false;
 
-    $element= $this->_elements[$pos];
-    $h= Objects::hashOf($element);
-    $this->_hash-= HashProvider::hashOf($h);
     unset($this->_elements[$pos]);
     $this->_elements= array_values($this->_elements);   // Re-index
     return true;
@@ -155,16 +146,20 @@ class Queue extends \lang\Object {
    * @return  string
    */
   public function hashCode() {
-    return $this->_hash;
+    $hash= '';
+    foreach ($this->_elements as $element) {
+      $hash.= Objects::hashOf($element);
+    }
+    return md5($hash);
   }
   
   /**
    * Returns true if this queue equals another queue.
    *
-   * @param   lang.Generic cmp
+   * @param   var cmp
    * @return  bool
    */
   public function equals($cmp) {
-    return $cmp instanceof self && $this->_hash === $cmp->_hash;
+    return $cmp instanceof self && $this->hashCode() === $cmp->hashCode();
   }
 }

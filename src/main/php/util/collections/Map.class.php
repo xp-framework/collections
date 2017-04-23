@@ -3,8 +3,6 @@
 /**
  * An object that maps keys to values. A map cannot contain duplicate 
  * keys; each key can map to at most one value. 
- *
- * @see   xp://util.collections.HashProvider
  */
 #[@generic(self= 'K, V')]
 interface Map extends \ArrayAccess {
