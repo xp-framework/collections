@@ -3,6 +3,11 @@ Collections change log
 
 ## ?.?.? / ????-??-??
 
+* Merged PR #1: Remove HashProvider and deprecate it.
+  This speeds up HashTable, HashSet, Queue and Stack performance by a
+  factor between 2 and 4, depending on the usecase.
+  (@thekid)
+
 ## 7.2.0 / 2016-08-28
 
 * Added forward compatibility with XP 8.0.0 by ensuring `hashCode()` 
