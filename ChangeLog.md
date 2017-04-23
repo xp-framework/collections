@@ -3,6 +3,8 @@ Collections change log
 
 ## ?.?.? / ????-??-??
 
+## 7.3.0 / 2017-04-23
+
 * Simplified code: Replaced anonymous iterator instances with `yield`
   (@thekid)
 * Merged PR #1: Remove HashProvider and deprecate it.
