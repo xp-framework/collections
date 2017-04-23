@@ -43,10 +43,7 @@ class Pair extends \lang\Object {
    * @return string
    */
   public function hashCode() {
-    return (
-      HashProvider::hashOf(Objects::hashOf($this->key)) +
-      HashProvider::hashOf(Objects::hashOf($this->value))
-    );
+    return md5(Objects::hashOf($this->key).Objects::hashOf($this->value));
   }
 
   /**
