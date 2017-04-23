@@ -15,30 +15,13 @@ use lang\Generic;
  */
 #[@generic(self= 'K, V', implements= ['K, V'])]
 class HashTable extends \lang\Object implements Map, \IteratorAggregate {
-  protected static $iterate= null;
   protected $_buckets= [];
 
-  static function __static() {
-    self::$iterate= newinstance('Iterator', [], '{
-      private $i= 0, $v, $b;
-      public function on($v) { $self= new self(); $self->v= $v; return $self; }
-      public function current() { return new \util\collections\Pair($this->b[0], $this->b[1]); }
-      public function key() { return $this->i; }
-      public function next() { $this->b= next($this->v); $this->i++; }
-      public function rewind() { reset($this->v); $this->b= current($this->v); $this->i= 0;  }
-      public function valid() { return $this->b !== false; }
-    }');
-  }
-
-  /**
-   * Throws an IllegalStateException
-   *
-   * @see     https://github.com/xp-framework/xp-framework/issues/47#issuecomment-1728753
-   * @see     php://language.oop5.iterations
-   * @return  php.Iterator
-   */
+  /** @return iterable */
   public function getIterator() {
-    return self::$iterate->on($this->_buckets);
+    foreach ($this->_buckets as $bucket) {
+      yield new Pair($bucket[0], $bucket[1]);
+    }
   }
   
   /**

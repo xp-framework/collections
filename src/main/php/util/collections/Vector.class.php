@@ -15,25 +15,8 @@ use lang\IndexOutOfBoundsException;
  */
 #[@generic(self= 'T', implements= ['T'])]
 class Vector extends \lang\Object implements IList {
-  protected static
-    $iterate   = null;
+  protected $elements, $size;
 
-  protected
-    $elements  = [],
-    $size      = 0;
-
-  static function __static() {
-    self::$iterate= newinstance('Iterator', [], '{
-      private $i= 0, $v;
-      public function on($v) { $self= new self(); $self->v= $v; return $self; }
-      public function current() { return $this->v[$this->i]; }
-      public function key() { return $this->i; }
-      public function next() { $this->i++; }
-      public function rewind() { $this->i= 0; }
-      public function valid() { return $this->i < sizeof($this->v); }
-    }');
-  }
-  
   /**
    * Constructor
    *
@@ -45,14 +28,11 @@ class Vector extends \lang\Object implements IList {
     $this->size= sizeof($this->elements);
   }
 
-  /**
-   * Returns an iterator for use in foreach()
-   *
-   * @see     php://language.oop5.iterations
-   * @return  php.Iterator
-   */
+  /** @return iterable */
   public function getIterator() {
-    return self::$iterate->on($this->elements);
+    foreach ($this->elements as $element) {
+      yield $element;
+    }
   }
 
   /**

@@ -12,32 +12,13 @@ use lang\IllegalArgumentException;
  */
 #[@generic(self= 'T', implements= ['T'])]
 class HashSet extends \lang\Object implements Set {
-  protected static $iterate;
+  protected $_elements= [];
 
-  protected
-    $_elements = [],
-    $_hash     = 0;
-
-  static function __static() {
-    self::$iterate= newinstance('Iterator', [], '{
-      private $i= 0, $v;
-      public function on($v) { $self= new self(); $self->v= $v; return $self; }
-      public function current() { return current($this->v); }
-      public function key() { return $this->i; }
-      public function next() { next($this->v); $this->i++; }
-      public function rewind() { reset($this->v); $this->i= 0; }
-      public function valid() { return $this->i < sizeof($this->v); }
-    }');
-  }
-
-  /**
-   * Returns an iterator for use in foreach()
-   *
-   * @see     php://language.oop5.iterations
-   * @return  php.Iterator
-   */
+  /** @return iterable */
   public function getIterator() {
-    return self::$iterate->on($this->_elements);
+    foreach ($this->_elements as $element) {
+      yield $element;
+    }
   }
 
   /**
