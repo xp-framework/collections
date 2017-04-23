@@ -16,6 +16,7 @@
  *   HashProvider::getInstance()->setImplementation(new MyHashImplementation());
  * ```
  * 
+ * @deprecated
  * @see   xp://util.collections.DJBX33AHashImplementation
  * @see   xp://util.collections.MD5HashImplementation
  * @see   xp://util.collections.Map

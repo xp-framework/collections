@@ -7,6 +7,7 @@ use util\collections\HashImplementation;
 /**
  * Test HashProvider class
  *
+ * @deprecated
  * @see  xp://util.collections.HashProvider
  */
 class HashProviderTest extends TestCase {

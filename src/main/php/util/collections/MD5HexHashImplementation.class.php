@@ -12,6 +12,7 @@
  * // 5.2.10: float(2.4057803815529E+37)
  * ```
  *
+ * @deprecated
  * @see   php://md5
  * @see   php://hexdec
  * @see   xp://util.collections.HashProvider
