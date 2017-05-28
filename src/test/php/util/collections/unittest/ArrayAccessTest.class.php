@@ -31,7 +31,7 @@ class ArrayAccessTest extends \unittest\TestCase {
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function hashTableReadIllegalElement() {
-    $c= create('new util.collections.HashTable<string, lang.Object>()');
+    $c= create('new util.collections.HashTable<string, lang.Value>()');
     $c[STDIN];
   }
 
@@ -45,13 +45,13 @@ class ArrayAccessTest extends \unittest\TestCase {
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function hashTableWriteIllegalKey() {
-    $c= create('new util.collections.HashTable<string, lang.Object>()');
+    $c= create('new util.collections.HashTable<string, lang.Value>()');
     $c[STDIN]= new Name('Hello');
   }
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function hashTableWriteIllegalValue() {
-    $c= create('new util.collections.HashTable<string, lang.Object>()');
+    $c= create('new util.collections.HashTable<string, lang.Value>()');
     $c['hello']= 'scalar';
   }
 

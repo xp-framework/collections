@@ -7,6 +7,7 @@ use util\collections\Stack;
 use util\collections\Queue;
 use util\collections\LRUBuffer;
 use lang\IllegalArgumentException;
+use lang\Value;
 
 /**
  * TestCase
@@ -23,23 +24,23 @@ class GenericsTest extends \unittest\TestCase {
   #[@test]
   public function differingGenericHashTablesNotEquals() {
     $this->assertNotEquals(
-      create('new util.collections.HashTable<lang.Object, lang.Object>'),
-      create('new util.collections.HashTable<util.collections.unittest.Name, lang.Object>')
+      create('new util.collections.HashTable<lang.Value, lang.Value>'),
+      create('new util.collections.HashTable<util.collections.unittest.Name, lang.Value>')
     );
   }
 
   #[@test]
   public function sameGenericHashTablesAreEqual() {
     $this->assertEquals(
-      create('new util.collections.HashTable<util.collections.unittest.Name, lang.Object>'),
-      create('new util.collections.HashTable<util.collections.unittest.Name, lang.Object>')
+      create('new util.collections.HashTable<util.collections.unittest.Name, lang.Value>'),
+      create('new util.collections.HashTable<util.collections.unittest.Name, lang.Value>')
     );
   }
 
   #[@test]
   public function differingGenericHashSetsNotEquals() {
     $this->assertNotEquals(
-      create('new util.collections.HashSet<lang.Object>'),
+      create('new util.collections.HashSet<lang.Value>'),
       create('new util.collections.HashSet<util.collections.unittest.Name>')
     );
   }
@@ -55,7 +56,7 @@ class GenericsTest extends \unittest\TestCase {
   #[@test]
   public function differingGenericVectorsNotEquals() {
     $this->assertNotEquals(
-      create('new util.collections.Vector<lang.Object>'),
+      create('new util.collections.Vector<lang.Value>'),
       create('new util.collections.Vector<util.collections.unittest.Name>')
     );
   }
@@ -71,7 +72,7 @@ class GenericsTest extends \unittest\TestCase {
   #[@test]
   public function differingGenericQueuesNotEquals() {
     $this->assertNotEquals(
-      create('new util.collections.Queue<lang.Object>'),
+      create('new util.collections.Queue<lang.Value>'),
       create('new util.collections.Queue<util.collections.unittest.Name>')
     );
   }
@@ -87,7 +88,7 @@ class GenericsTest extends \unittest\TestCase {
   #[@test]
   public function differingGenericStacksNotEquals() {
     $this->assertNotEquals(
-      create('new util.collections.Stack<lang.Object>'),
+      create('new util.collections.Stack<lang.Value>'),
       create('new util.collections.Stack<util.collections.unittest.Name>')
     );
   }
@@ -103,7 +104,7 @@ class GenericsTest extends \unittest\TestCase {
   #[@test]
   public function differingGenericLRUBuffersNotEquals() {
     $this->assertNotEquals(
-      create('new util.collections.LRUBuffer<lang.Object>', [10]),
+      create('new util.collections.LRUBuffer<lang.Value>', [10]),
       create('new util.collections.LRUBuffer<util.collections.unittest.Name>', [10])
     );
   }
@@ -118,7 +119,7 @@ class GenericsTest extends \unittest\TestCase {
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function nonGenericPassedToCreate() {
-    create('new lang.Object<util.collections.unittest.Name>');
+    create('new lang.Value<util.collections.unittest.Name>');
   }
 
   #[@test]
