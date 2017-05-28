@@ -22,7 +22,7 @@
  * @see   xp://util.collections.Map
  * @test  xp://net.xp_framework.unittest.util.collections.HashProviderTest
  */
-class HashProvider extends \lang\Object {
+class HashProvider {
   protected static
     $instance = null;
 

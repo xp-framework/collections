@@ -14,7 +14,7 @@ use lang\Generic;
  * @see   xp://util.collections.Map
  */
 #[@generic(self= 'K, V', implements= ['K, V'])]
-class HashTable extends \lang\Object implements Map, \IteratorAggregate {
+class HashTable implements Map, \lang\Value, \IteratorAggregate {
   protected $_buckets= [];
 
   /** @return iterable */
@@ -187,29 +187,6 @@ class HashTable extends \lang\Object implements Map, \IteratorAggregate {
     }
     return false;
   }
-
-  /**
-   * Returns a hashcode for this map
-   *
-   * @return  string
-   */
-  public function hashCode() {
-    $hash= '';
-    foreach ($this->_buckets as $key => $value) {
-      $hash.= $key.Objects::hashOf($value[1]);
-    }
-    return md5($hash);
-  }
-  
-  /**
-   * Returns true if this map equals another map.
-   *
-   * @param   lang.Generic cmp
-   * @return  bool
-   */
-  public function equals($cmp) {
-    return $cmp instanceof self && $this->hashCode() === $cmp->hashCode();
-  }
   
   /**
    * Returns an array of keys
@@ -238,7 +215,7 @@ class HashTable extends \lang\Object implements Map, \IteratorAggregate {
     }
     return $values;
   }
-  
+
   /**
    * Returns a string representation of this map
    *
@@ -253,5 +230,34 @@ class HashTable extends \lang\Object implements Map, \IteratorAggregate {
       $s.= '  '.Objects::stringOf($b[0]).' => '.Objects::stringOf($b[1]).",\n";
     }
     return substr($s, 0, -2)."\n}";
+  }
+
+  /** Creates a hash code for this object */
+  public function hashCode() {
+    $hash= '';
+    foreach ($this->_buckets as $key => $value) {
+      $hash.= $key.Objects::hashOf($value[1]);
+    }
+    return md5($hash);
+  }
+
+  /**
+   * Compares a specified object to this object.
+   *
+   * @param   var $value
+   * @return  int
+   */
+  public function compareTo($value) {
+    return $value instanceof self ? Objects::compare($this->_buckets, $value->_buckets) : 1;
+  }
+
+  /**
+   * Returns true if this map equals another map.
+   *
+   * @param   var $value
+   * @return  bool
+   */
+  public function equals($value) {
+    return $value instanceof self && Objects::equal($this->_buckets, $value->_buckets);
   }
 }

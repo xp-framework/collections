@@ -3,8 +3,6 @@
 use util\Objects;
 use lang\IndexOutOfBoundsException;
 use util\NoSuchElementException;
-use lang\Generic;
-use lang\Value;
 
 /**
  * A First-In-First-Out (FIFO) queue of objects.
@@ -33,7 +31,7 @@ use lang\Value;
  * @see      http://www.faqs.org/docs/javap/c12/ex-12-1-answer.html
  */
 #[@generic(self= 'T')]
-class Queue extends \lang\Object {
+class Queue implements \lang\Value {
   protected $_elements= [];
 
   /**
@@ -141,6 +139,22 @@ class Queue extends \lang\Object {
   }
 
   /**
+   * Returns a string representation of this queue
+   *
+   * @return  string
+   */
+  public function toString() {
+    $s= nameof($this).'['.sizeof($this->_elements).'] {';
+    if (empty($this->_elements)) return $s.' }';
+
+    $s.= "\n";
+    foreach ($this->_elements as $e) {
+      $s.= '  '.Objects::stringOf($e).",\n";
+    }
+    return substr($s, 0, -2)."\n}";
+  }
+
+  /**
    * Returns a hashcode for this queue
    *
    * @return  string
@@ -152,14 +166,24 @@ class Queue extends \lang\Object {
     }
     return md5($hash);
   }
-  
+
   /**
-   * Returns true if this queue equals another queue.
+   * Compares a specified object to this object.
    *
-   * @param   var cmp
+   * @param   var $value
+   * @return  int
+   */
+  public function compareTo($value) {
+    return $value instanceof self ? Objects::compare($this->_elements, $value->_elements) : 1;
+  }
+
+  /**
+   * Returns true if this map equals another value.
+   *
+   * @param   var $value
    * @return  bool
    */
-  public function equals($cmp) {
-    return $cmp instanceof self && $this->hashCode() === $cmp->hashCode();
+  public function equals($value) {
+    return $value instanceof self && Objects::equal($this->_elements, $value->_elements);
   }
 }

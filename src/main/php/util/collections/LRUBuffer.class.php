@@ -13,7 +13,7 @@ use lang\IllegalArgumentException;
  * @test  xp://net.xp_framework.unittest.util.collections.GenericsTest
  */
 #[@generic(self= 'T')]
-class LRUBuffer extends \lang\Object {
+class LRUBuffer implements \lang\Value {
   protected
     $prefix    = 0,
     $size      = 0,
@@ -106,16 +106,50 @@ class LRUBuffer extends \lang\Object {
   }
 
   /**
-   * Checks if a specified object is equal to this object.
+   * Returns a string representation of this buffer
    *
-   * @param   lang.Generic collection
+   * @return  string
+   */
+  public function toString() {
+    $s= nameof($this).'['.sizeof($this->_elements).'/'.$this->size.'] {';
+    if (empty($this->_elements)) return $s.' }';
+
+    $s.= "\n";
+    foreach ($this->_elements as $e) {
+      $s.= '  '.Objects::stringOf($e).",\n";
+    }
+    return substr($s, 0, -2)."\n}";
+  }
+
+  /** Creates a hash code for this object */
+  public function hashCode() {
+    return 'L'.$this->prefix.$this->size.Objects::hashOf($this->_elements);
+  }
+
+  /**
+   * Compares a specified object to this object.
+   *
+   * @param   var $value
+   * @return  int
+   */
+  public function compareTo($value) {
+    return $value instanceof self
+      ? Objects::compare([$this->size, $this->_elements], [$value->size, $value->_elements])
+      : 1
+    ;
+  }
+
+  /**
+   * Returns true if this map equals another map.
+   *
+   * @param   var $value
    * @return  bool
    */
-  public function equals($cmp) {
-    return (
-      $cmp instanceof self &&
-      $this->size === $cmp->size &&
-      array_keys($this->_elements) === array_keys($cmp->_elements)
-    );
+  public function equals($value) {
+    return 
+      $value instanceof self &&
+      $this->size === $value->size &&
+      Objects::equal($this->_elements, $value->_elements)
+    ;
   }
 }

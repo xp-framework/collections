@@ -9,7 +9,7 @@ use util\Objects;
  * @test xp://net.xp_framework.unittest.util.collections.PairTest
  */
 #[@generic(self= 'K, V')]
-class Pair extends \lang\Object {
+class Pair implements \lang\Value {
   #[@type('K')]
   public $key;
   #[@type('V')]
@@ -30,11 +30,11 @@ class Pair extends \lang\Object {
   /**
    * Returns whether a given value is equal to this pair
    *
-   * @param  var cmp
-   * @return bool
+   * @param  var $value
+   * @return int
    */
-  public function equals($cmp) {
-    return $cmp instanceof self && Objects::equal($cmp->key, $this->key);
+  public function compareTo($value) {
+    return $value instanceof self ? Objects::compare($this->key, $value->key) : 1;
   }
 
   /**
