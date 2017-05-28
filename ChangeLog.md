@@ -3,6 +3,10 @@ Collections change log
 
 ## ?.?.? / ????-??-??
 
+## 8.0.0 / 2017-05-28
+
+* Merged PR #2: Forward compatibility with XP 9.0.0 - @thekid
+
 ## 7.3.0 / 2017-04-23
 
 * Simplified code: Replaced anonymous iterator instances with `yield`
