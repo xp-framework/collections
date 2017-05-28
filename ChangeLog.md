@@ -5,7 +5,8 @@ Collections change log
 
 ## 8.0.0 / 2017-05-28
 
-* Removed deprecated HashProvider - @thekid
+* Removed deprecated `util.collections.Arrays` class - @thekid
+* Removed deprecated `HashProvider` and implementations - @thekid
 * Merged PR #2: Forward compatibility with XP 9.0.0 - @thekid
 
 ## 7.3.0 / 2017-04-23
