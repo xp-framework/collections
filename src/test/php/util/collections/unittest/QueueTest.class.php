@@ -1,5 +1,6 @@
 <?php namespace util\collections\unittest;
  
+use util\Objects;
 use util\collections\Queue;
 use util\NoSuchElementException;
 use lang\IndexOutOfBoundsException;
@@ -103,7 +104,7 @@ class QueueTest extends \unittest\TestCase {
     while (!$this->queue->isEmpty()) {
       $element= $this->queue->get();
 
-      if (!$input[$i]->equals($element)) {
+      if (!Objects::equal($input[$i], $element)) {
         $this->fail('Not equal at offset #'.$i, $element, $input[$i]);
         break;
       }

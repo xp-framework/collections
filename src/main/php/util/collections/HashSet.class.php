@@ -11,7 +11,7 @@ use lang\IllegalArgumentException;
  * @test  xp://net.xp_framework.unittest.util.collections.ArrayAccessTest
  */
 #[@generic(self= 'T', implements= ['T'])]
-class HashSet extends \lang\Object implements Set {
+class HashSet implements Set {
   protected $_elements= [];
 
   /** @return iterable */

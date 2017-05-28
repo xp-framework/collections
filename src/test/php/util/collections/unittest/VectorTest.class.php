@@ -1,9 +1,9 @@
 <?php namespace util\collections\unittest;
 
-use lang\Object;
 use lang\IllegalArgumentException;
 use lang\IndexOutOfBoundsException;
 use util\collections\Vector;
+use lang\Value;
 
 /**
  * TestCase for vector class
@@ -24,7 +24,7 @@ class VectorTest extends \unittest\TestCase {
   
   #[@test]
   public function nonEmptyVector() {
-    $v= new Vector([new Object()]);
+    $v= new Vector([new Name('Test')]);
     $this->assertEquals(1, $v->size());
     $this->assertFalse($v->isEmpty());
   }
@@ -32,14 +32,14 @@ class VectorTest extends \unittest\TestCase {
   #[@test]
   public function adding() {
     $v= new Vector();
-    $v->add(new Object());
+    $v->add(new Name('Test'));
     $this->assertEquals(1, $v->size());
   }
 
   #[@test]
   public function addAllArray() {
     $v= new Vector();
-    $this->assertTrue($v->addAll([new Object(), new Object()]));
+    $this->assertTrue($v->addAll([new Name('Test'), new Name('Test')]));
     $this->assertEquals(2, $v->size());
   }
 
@@ -47,8 +47,8 @@ class VectorTest extends \unittest\TestCase {
   public function addAllVector() {
     $v1= new Vector();
     $v2= new Vector();
-    $v2->add(new Object());
-    $v2->add(new Object());
+    $v2->add(new Name('Test'));
+    $v2->add(new Name('Test'));
     $this->assertTrue($v1->addAll($v2));
     $this->assertEquals(2, $v1->size());
   }
@@ -56,7 +56,7 @@ class VectorTest extends \unittest\TestCase {
   #[@test]
   public function addAllArrayObject() {
     $v= new Vector();
-    $this->assertTrue($v->addAll(new \ArrayObject([new Object(), new Object()])));
+    $this->assertTrue($v->addAll(new \ArrayObject([new Name('Test'), new Name('Test')])));
     $this->assertEquals(2, $v->size());
   }
 
@@ -77,9 +77,9 @@ class VectorTest extends \unittest\TestCase {
 
   #[@test]
   public function unchangedAfterNullInAddAll() {
-    $v= create('new util.collections.Vector<lang.Object>()');
+    $v= create('new util.collections.Vector<lang.Value>()');
     try {
-      $v->addAll([new Object(), null]);
+      $v->addAll([new Name('Test'), null]);
       $this->fail('addAll() did not throw an exception', null, 'lang.IllegalArgumentException');
     } catch (IllegalArgumentException $expected) {
     }
@@ -99,7 +99,7 @@ class VectorTest extends \unittest\TestCase {
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function addingNull() {
-    create('new util.collections.Vector<lang.Object>()')->add(null);
+    create('new util.collections.Vector<lang.Value>()')->add(null);
   }
 
   #[@test]
@@ -114,17 +114,17 @@ class VectorTest extends \unittest\TestCase {
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function replacingWithNull() {
-    create('new util.collections.Vector<lang.Object>', [new Object()])->set(0, null);
+    create('new util.collections.Vector<lang.Value>', [new Name('Test')])->set(0, null);
   }
 
   #[@test, @expect(IndexOutOfBoundsException::class)]
   public function settingPastEnd() {
-    (new Vector())->set(0, new Object());
+    (new Vector())->set(0, new Name('Test'));
   }
 
   #[@test, @expect(IndexOutOfBoundsException::class)]
   public function settingNegative() {
-    (new Vector())->set(-1, new Object());
+    (new Vector())->set(-1, new Name('Test'));
   }
 
   #[@test]
@@ -181,7 +181,7 @@ class VectorTest extends \unittest\TestCase {
 
   #[@test]
   public function elementsOf() {
-    $el= [new Name('a'), new Object()];
+    $el= [new Name('a'), new Name('Test')];
     $this->assertEquals($el, (new Vector($el))->elements());
   }
 
@@ -195,12 +195,12 @@ class VectorTest extends \unittest\TestCase {
 
   #[@test]
   public function emptyVectorDoesNotContainName() {
-    $this->assertFalse((new Vector())->contains(new Object()));
+    $this->assertFalse((new Vector())->contains(new Name('Test')));
   }
 
   #[@test]
   public function indexOfOnEmptyVector() {
-    $this->assertFalse((new Vector())->indexOf(new Object()));
+    $this->assertFalse((new Vector())->indexOf(new Name('Test')));
   }
 
   #[@test]
@@ -212,12 +212,12 @@ class VectorTest extends \unittest\TestCase {
   #[@test]
   public function indexOfElementContainedTwice() {
     $a= new Name('A');
-    $this->assertEquals(0, (new Vector([$a, new Object(), $a]))->indexOf($a));
+    $this->assertEquals(0, (new Vector([$a, new Name('Test'), $a]))->indexOf($a));
   }
 
   #[@test]
   public function lastIndexOfOnEmptyVector() {
-    $this->assertFalse((new Vector())->lastIndexOf(new Object()));
+    $this->assertFalse((new Vector())->lastIndexOf(new Name('Test')));
   }
 
   #[@test]
@@ -229,7 +229,7 @@ class VectorTest extends \unittest\TestCase {
   #[@test]
   public function lastIndexOfElementContainedTwice() {
     $a= new Name('A');
-    $this->assertEquals(2, (new Vector([$a, new Object(), $a]))->lastIndexOf($a));
+    $this->assertEquals(2, (new Vector([$a, new Name('Test'), $a]))->lastIndexOf($a));
   }
 
   #[@test]
@@ -288,7 +288,7 @@ class VectorTest extends \unittest\TestCase {
 
   #[@test]
   public function twoVectorsOfDifferentSizeAreNotEqual() {
-    $this->assertFalse((new Vector([new Object()]))->equals(new Vector()));
+    $this->assertFalse((new Vector([new Name('Test')]))->equals(new Vector()));
   }
 
   #[@test]

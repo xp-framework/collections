@@ -8,7 +8,7 @@
  * @see   xp://util.collections.HashProvider
  * @test  xp://net.xp_framework.unittest.util.collections.MD5HashImplementationTest:
  */
-class MD5HashImplementation extends \lang\Object implements HashImplementation {
+class MD5HashImplementation implements HashImplementation {
 
   /**
    * Retrieve hash code for a given string

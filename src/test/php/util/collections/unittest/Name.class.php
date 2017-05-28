@@ -1,6 +1,6 @@
 <?php namespace util\collections\unittest;
 
-class Name extends \lang\Object {
+class Name implements \lang\Value {
   private $value;
 
   /** @param string $value */
@@ -22,10 +22,10 @@ class Name extends \lang\Object {
    * Returns whether this name is equal to another
    *
    * @param  var $cmp
-   * @return bool
+   * @return int
    */
-  public function equals($cmp) {
-    return $cmp instanceof self && $this->value === $cmp->value;
+  public function compareTo($value) {
+    return $value instanceof self ? strcmp($this->value, $value->value) : 1;
   }
 
   /**

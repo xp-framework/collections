@@ -13,7 +13,7 @@ use lang\Value;
  * @see   xp://util.collections.IList
  * @see   xp://lang.types.ArrayList
  */
-abstract class Arrays extends \lang\Object {
+abstract class Arrays {
   public static $EMPTY= null;
 
   static function __static() {

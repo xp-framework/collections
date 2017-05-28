@@ -2,7 +2,7 @@
  
 use util\collections\HashTable;
 use util\collections\Pair;
-use lang\Object;
+use lang\Value;
 use lang\IllegalArgumentException;
 use util\Money;
 use util\Currency;
@@ -48,15 +48,17 @@ class HashTableTest extends \unittest\TestCase {
   protected function variations() {
     return [
       [new HashTable()],
-      [create('new util.collections.HashTable<lang.Object, lang.Object>')]
+      [create('new util.collections.HashTable<lang.Value, lang.Value>')]
     ];
   }
 
-  /** @return lang.Object */
+  /** @return lang.Value */
   protected function hashCodeCounter() {
-    return newinstance(Object::class, [], [
-      'invoked'  => 0,
-      'hashCode' => function() { $this->invoked++; return parent::hashCode(); }
+    return newinstance(Value::class, [], [
+      'invoked'   => 0,
+      'toString'  => function() { return 'Test'; },
+      'hashCode'  => function() { $this->invoked++; return 'Test'; },
+      'compareTo' => function($value) { return 0; }
     ]);
   }
 

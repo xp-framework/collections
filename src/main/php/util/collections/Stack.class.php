@@ -2,8 +2,6 @@
 
 use lang\IndexOutOfBoundsException;
 use util\NoSuchElementException;
-use lang\Generic;
-use lang\Value;
 use util\Objects;
 
 /**
@@ -34,7 +32,7 @@ use util\Objects;
  * @see      http://java.sun.com/j2se/1.4.2/docs/api/java/util/Stack.html 
  */
 #[@generic(self= 'T')]
-class Stack extends \lang\Object {
+class Stack implements \lang\Value {
   protected $_elements= [];
 
   /**
@@ -125,7 +123,23 @@ class Stack extends \lang\Object {
   }
 
   /**
-   * Returns a hashcode for this queue
+   * Returns a string representation of this stack
+   *
+   * @return  string
+   */
+  public function toString() {
+    $s= nameof($this).'['.sizeof($this->_elements).'] {';
+    if (empty($this->_elements)) return $s.' }';
+
+    $s.= "\n";
+    foreach ($this->_elements as $e) {
+      $s.= '  '.Objects::stringOf($e).",\n";
+    }
+    return substr($s, 0, -2)."\n}";
+  }
+
+  /**
+   * Returns a hashcode for this stack
    *
    * @return  string
    */
@@ -138,12 +152,22 @@ class Stack extends \lang\Object {
   }
   
   /**
-   * Returns true if this queue equals another queue.
+   * Compares a specified object to this object.
    *
-   * @param   var cmp
+   * @param   var $value
+   * @return  int
+   */
+  public function compareTo($value) {
+    return $value instanceof self ? Objects::compare($this->_elements, $value->_elements) : 1;
+  }
+
+  /**
+   * Returns true if this map equals another value.
+   *
+   * @param   var $value
    * @return  bool
    */
-  public function equals($cmp) {
-    return $cmp instanceof self && $this->hashCode() === $cmp->hashCode();
+  public function equals($value) {
+    return $value instanceof self && Objects::equal($this->_elements, $value->_elements);
   }
 }

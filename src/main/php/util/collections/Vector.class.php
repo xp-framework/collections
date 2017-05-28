@@ -1,7 +1,6 @@
 <?php namespace util\collections;
 
-use lang\Generic;
-use lang\Value;
+use util\Objects;
 use lang\IllegalArgumentException;
 use lang\IndexOutOfBoundsException;
 
@@ -14,7 +13,7 @@ use lang\IndexOutOfBoundsException;
  * @see   xp://lang.types.ArrayList
  */
 #[@generic(self= 'T', implements= ['T'])]
-class Vector extends \lang\Object implements IList {
+class Vector implements IList, \lang\Value {
   protected $elements, $size;
 
   /**
@@ -280,11 +279,7 @@ class Vector extends \lang\Object implements IList {
     return false;
   }
   
-  /**
-   * Creates a string representation of this object
-   *
-   * @return  string
-   */
+  /** Creates a string representation of this object */
   public function toString() {
     $r= nameof($this).'['.$this->size."]@{\n";
     foreach ($this->elements as $i => $element) {
@@ -292,22 +287,29 @@ class Vector extends \lang\Object implements IList {
     } 
     return $r.'}';
   }
-  
+
+  /** Creates a hash code for this object */
+  public function hashCode() {
+    return Objects::hashOf($this->elements);
+  }
+
+  /**
+   * Compares a specified object to this object.
+   *
+   * @param   var $value
+   * @return  int
+   */
+  public function compareTo($value) {
+    return $value instanceof self ? Objects::compare($this->elements, $value->elements) : 1;
+  }
+
   /**
    * Checks if a specified object is equal to this object.
    *
-   * @param   var cmp
+   * @param   var $value
    * @return  bool
    */
-  public function equals($cmp) {
-    if (!($cmp instanceof self) || $this->size !== $cmp->size) return false;
-    
-    // Compare element by element
-    foreach ($this->elements as $i => $element) {
-      if ($element instanceof Generic && !$element->equals($cmp->elements[$i])) return false;
-      if ($element instanceof Value && 0 !== $element->compareTo($cmp->elements[$i])) return false;
-      if ($element !== $this->elements[$i]) return false;
-    }
-    return true;
+  public function equals($value) {
+    return $value instanceof self && Objects::equal($this->elements, $value->elements);
   }
 }
