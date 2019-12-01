@@ -3,6 +3,10 @@ Collections change log
 
 ## ?.?.? / ????-??-??
 
+## 8.0.1 / 2019-12-01
+
+* Made compatible with XP 10 - @thekid
+
 ## 8.0.0 / 2017-05-28
 
 * Removed deprecated `util.collections.Arrays` class - @thekid
