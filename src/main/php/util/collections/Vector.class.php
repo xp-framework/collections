@@ -1,8 +1,8 @@
 <?php namespace util\collections;
 
-use util\Objects;
 use lang\IllegalArgumentException;
 use lang\IndexOutOfBoundsException;
+use util\Objects;
 
 /**
  * Resizable array list
@@ -283,7 +283,7 @@ class Vector implements IList, \lang\Value {
   public function toString() {
     $r= nameof($this).'['.$this->size."]@{\n";
     foreach ($this->elements as $i => $element) {
-      $r.= '  '.$i.': '.\xp::stringOf($element, '  ')."\n";
+      $r.= '  '.$i.': '.Objects::stringOf($element, '  ')."\n";
     } 
     return $r.'}';
   }

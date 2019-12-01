@@ -1,9 +1,11 @@
 <?php namespace util\collections\unittest;
 
-use util\collections\LRUBuffer;
 use lang\IllegalArgumentException;
+use unittest\TestCase;
+use util\Objects;
+use util\collections\LRUBuffer;
 
-class LRUBufferTest extends \unittest\TestCase {
+class LRUBufferTest extends TestCase {
   const DEFAULT_SIZE = 3;
 
   protected $buffer= null;
@@ -42,8 +44,8 @@ class LRUBufferTest extends \unittest\TestCase {
     for ($i= 0, $s= $this->buffer->getSize(); $i < $s; $i++) {
       if (null === ($victim= $this->buffer->add(new Name('item #'.$i)))) continue;
       
-      return $this->fail(
-        'Victim '.\xp::stringOf($victim).' when inserting item #'.($i + 1).'/'.$s, 
+      $this->fail(
+        'Victim '.Objects::stringOf($victim).' when inserting item #'.($i + 1).'/'.$s, 
         $victim, 
         null
       );
