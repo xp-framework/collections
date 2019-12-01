@@ -1,8 +1,8 @@
 <?php namespace util\collections;
 
-use util\Objects;
 use lang\IndexOutOfBoundsException;
 use util\NoSuchElementException;
+use util\Objects;
 
 /**
  * A First-In-First-Out (FIFO) queue of objects.
@@ -30,7 +30,7 @@ use util\NoSuchElementException;
  * @see      xp://util.collections.Stack
  * @see      http://www.faqs.org/docs/javap/c12/ex-12-1-answer.html
  */
-#[@generic(self= 'T')]
+#[@generic(['self' => 'T'])]
 class Queue implements \lang\Value {
   protected $_elements= [];
 
@@ -40,7 +40,7 @@ class Queue implements \lang\Value {
    * @param   T element
    * @return  T element
    */
-  #[@generic(params= 'T', return= 'T')]
+  #[@generic(['params' => 'T', 'return' => 'T'])]
   public function put($element) {
     $this->_elements[]= $element;
     return $element;
@@ -52,7 +52,7 @@ class Queue implements \lang\Value {
    * @return  lang.Generic
    * @throws  util.NoSuchElementException
    */    
-  #[@generic(return= 'T')]
+  #[@generic(['return' => 'T'])]
   public function get() {
     if (empty($this->_elements)) {
       throw new NoSuchElementException('Queue is empty');
@@ -71,9 +71,9 @@ class Queue implements \lang\Value {
    *
    * @return  T element
    */        
-  #[@generic(return= 'T')]
+  #[@generic(['return' => 'T'])]
   public function peek() {
-    if (empty($this->_elements)) return null; else return $this->_elements[0];
+    return empty($this->_elements) ? null : $this->_elements[0];
   }
 
   /**
@@ -102,7 +102,7 @@ class Queue implements \lang\Value {
    * @param   T element
    * @return  int position
    */
-  #[@generic(params= 'T')]
+  #[@generic(['params' => 'T'])]
   public function search($element) {
     return ($keys= array_keys($this->_elements, $element)) ? $keys[0] : -1;
   }
@@ -114,7 +114,7 @@ class Queue implements \lang\Value {
    * @return  lang.Generic
    * @return  bool
    */
-  #[@generic(params= 'T')]
+  #[@generic(['params' => 'T'])]
   public function remove($element) {
     if (-1 === ($pos= $this->search($element))) return false;
 
@@ -130,7 +130,7 @@ class Queue implements \lang\Value {
    * @return  T
    * @throws  lang.IndexOutOfBoundsException
    */
-  #[@generic(return= 'T')]
+  #[@generic(['return' => 'T'])]
   public function elementAt($index) {
     if (!isset($this->_elements[$index])) {
       throw new IndexOutOfBoundsException('Index '.$index.' out of bounds');

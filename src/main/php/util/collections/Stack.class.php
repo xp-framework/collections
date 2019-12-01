@@ -31,7 +31,7 @@ use util\Objects;
  * @see      http://www.faqs.org/docs/javap/c12/ex-12-1-answer.html
  * @see      http://java.sun.com/j2se/1.4.2/docs/api/java/util/Stack.html 
  */
-#[@generic(self= 'T')]
+#[@generic(['self' => 'T'])]
 class Stack implements \lang\Value {
   protected $_elements= [];
 
@@ -42,7 +42,7 @@ class Stack implements \lang\Value {
    * @param   T element
    * @return  T
    */
-  #[@generic(params= 'T', return= 'T')]
+  #[@generic(['params' => 'T', 'return' => 'T'])]
   public function push($element) {
     array_unshift($this->_elements, $element);
     return $element;
@@ -54,7 +54,7 @@ class Stack implements \lang\Value {
    * @return  T
    * @throws  util.NoSuchElementException
    */    
-  #[@generic(return= 'T')]
+  #[@generic(['return' => 'T'])]
   public function pop() {
     if (empty($this->_elements)) {
       throw new NoSuchElementException('Stack is empty');
@@ -71,9 +71,9 @@ class Stack implements \lang\Value {
    *
    * @return  T element
    */        
-  #[@generic(return= 'T')]
+  #[@generic(['return' => 'T'])]
   public function peek() {
-    if (empty($this->_elements)) return null; else return $this->_elements[0];
+    return empty($this->_elements) ? null : $this->_elements[0];
   }
 
   /**
@@ -102,7 +102,7 @@ class Stack implements \lang\Value {
    * @param   T object
    * @return  int position
    */
-  #[@generic(params= 'T')]
+  #[@generic(['params' => 'T'])]
   public function search($element) {
     return ($keys= array_keys($this->_elements, $element)) ? $keys[0] : -1;
   }
@@ -114,7 +114,7 @@ class Stack implements \lang\Value {
    * @return  T
    * @throws  lang.IndexOutOfBoundsException
    */
-  #[@generic(return= 'T')]
+  #[@generic(['return' => 'T'])]
   public function elementAt($index) {
     if (!isset($this->_elements[$index])) {
       throw new IndexOutOfBoundsException('Index '.$index.' out of bounds');

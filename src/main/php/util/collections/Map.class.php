@@ -4,7 +4,7 @@
  * An object that maps keys to values. A map cannot contain duplicate 
  * keys; each key can map to at most one value. 
  */
-#[@generic(self= 'K, V')]
+#[@generic(['self' => 'K, V'])]
 interface Map extends \ArrayAccess {
   
   /**
@@ -18,7 +18,7 @@ interface Map extends \ArrayAccess {
    * @param   V value
    * @return  V the previous value associated with the key
    */
-  #[@generic(params= 'K, V', return= 'V')]
+  #[@generic(['params' => 'K, V', 'return' => 'V'])]
   public function put($key, $value);
 
   /**
@@ -28,7 +28,7 @@ interface Map extends \ArrayAccess {
    * @param   K key
    * @return  V the value associated with the key
    */
-  #[@generic(params= 'K', return= 'V')]
+  #[@generic(['params' => 'K', 'return' => 'V'])]
   public function get($key);
   
   /**
@@ -39,7 +39,7 @@ interface Map extends \ArrayAccess {
    * @param   K key
    * @return  V the previous value associated with the key
    */
-  #[@generic(params= 'K', return= 'V')]
+  #[@generic(['params' => 'K', 'return' => 'V'])]
   public function remove($key);
   
   /**
@@ -68,7 +68,7 @@ interface Map extends \ArrayAccess {
    * @param   K key
    * @return  bool
    */
-  #[@generic(params= 'K')]
+  #[@generic(['params' => 'K'])]
   public function containsKey($key);
 
   /**
@@ -77,7 +77,7 @@ interface Map extends \ArrayAccess {
    * @param   V value
    * @return  bool
    */
-  #[@generic(params= 'V')]
+  #[@generic(['params' => 'V'])]
   public function containsValue($value);
 
   /**
@@ -85,7 +85,7 @@ interface Map extends \ArrayAccess {
    *
    * @return  K[]
    */
-  #[@generic(return= 'K[]')]
+  #[@generic(['return' => 'K[]'])]
   public function keys();
 
   /**
@@ -93,7 +93,7 @@ interface Map extends \ArrayAccess {
    *
    * @return  V[]
    */
-  #[@generic(return= 'V[]')]
+  #[@generic(['return' => 'V[]'])]
   public function values();
 
   /**

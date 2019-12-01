@@ -12,7 +12,7 @@ use util\Objects;
  * @test  xp://net.xp_framework.unittest.util.collections.ArrayAccessTest
  * @see   xp://lang.types.ArrayList
  */
-#[@generic(self= 'T', implements= ['T'])]
+#[@generic(['self' => 'T', 'implements' => ['T']])]
 class Vector implements IList, \lang\Value {
   protected $elements, $size;
 
@@ -21,7 +21,7 @@ class Vector implements IList, \lang\Value {
    *
    * @param   T[] elements default []
    */
-  #[@generic(params= 'T[]')]
+  #[@generic(['params' => 'T[]'])]
   public function __construct($elements= []) {
     $this->elements= $elements;
     $this->size= sizeof($this->elements);
@@ -40,7 +40,7 @@ class Vector implements IList, \lang\Value {
    * @param   int offset
    * @return  T
    */
-  #[@generic(return= 'T')]
+  #[@generic(['return' => 'T'])]
   public function offsetGet($offset) {
     return $this->get($offset);
   }
@@ -52,7 +52,7 @@ class Vector implements IList, \lang\Value {
    * @param   T value
    * @throws  lang.IllegalArgumentException if key is neither numeric (set) nor NULL (add)
    */
-  #[@generic(params= ', T')]
+  #[@generic(['params' => ', T'])]
   public function offsetSet($offset, $value) {
     if (null === $offset) {
       $this->add($value);
@@ -106,7 +106,7 @@ class Vector implements IList, \lang\Value {
    * @param   T element
    * @return  T the added element
    */
-  #[@generic(params= 'T', return= 'T')]
+  #[@generic(['params' => 'T', 'return' => 'T'])]
   public function add($element) {
     $this->elements[]= $element;
     $this->size++;
@@ -120,7 +120,7 @@ class Vector implements IList, \lang\Value {
    * @return  bool TRUE if the vector was changed as a result of this operation, FALSE if not
    * @throws  lang.IllegalArgumentException
    */
-  #[@generic(params= 'T[]')]
+  #[@generic(['params' => 'T[]'])]
   public function addAll($elements) {
     $added= 0;
     foreach ($elements as $element) {
@@ -140,7 +140,7 @@ class Vector implements IList, \lang\Value {
    * @return  T the element previously at the specified position.
    * @throws  lang.IndexOutOfBoundsException
    */
-  #[@generic(params= ', T', return= 'T')]
+  #[@generic(['params' => ', T', 'return' => 'T'])]
   public function set($index, $element) {
     if ($index < 0 || $index >= $this->size) {
       throw new IndexOutOfBoundsException('Offset '.$index.' out of bounds');
@@ -158,7 +158,7 @@ class Vector implements IList, \lang\Value {
    * @return  T
    * @throws  lang.IndexOutOfBoundsException if key does not exist
    */
-  #[@generic(return= 'T')]
+  #[@generic(['return' => 'T'])]
   public function get($index) {
     if ($index < 0 || $index >= $this->size) {
       throw new IndexOutOfBoundsException('Offset '.$index.' out of bounds');
@@ -174,7 +174,7 @@ class Vector implements IList, \lang\Value {
    * @param   int index
    * @return  T the element that was removed from the list
    */
-  #[@generic(return= 'T')]
+  #[@generic(['return' => 'T'])]
   public function remove($index) {
     if ($index < 0 || $index >= $this->size) {
       throw new IndexOutOfBoundsException('Offset '.$index.' out of bounds');
@@ -202,7 +202,7 @@ class Vector implements IList, \lang\Value {
    *
    * @return  T[]
    */
-  #[@generic(return= 'T[]')]
+  #[@generic(['return' => 'T[]'])]
   public function elements() {
     return $this->elements;
   }
@@ -213,7 +213,7 @@ class Vector implements IList, \lang\Value {
    * @param   T element
    * @return  bool
    */
-  #[@generic(params= 'T')]
+  #[@generic(['params' => 'T'])]
   public function contains($element) {
     if ($element instanceof Generic) {
       foreach ($this->elements as $i => $compare) {
@@ -237,7 +237,7 @@ class Vector implements IList, \lang\Value {
    * @param   T element
    * @return  int offset where the element was found or FALSE
    */
-  #[@generic(params= 'T')]
+  #[@generic(['params' => 'T'])]
   public function indexOf($element) {
     if ($element instanceof Generic) {
       foreach ($this->elements as $i => $compare) {
@@ -261,7 +261,7 @@ class Vector implements IList, \lang\Value {
    * @param   T element
    * @return  int offset where the element was found or FALSE
    */
-  #[@generic(params= 'T')]
+  #[@generic(['params' => 'T'])]
   public function lastIndexOf($element) {
     if ($element instanceof Generic) {
       for ($i= $this->size- 1; $i > -1; $i--) {
