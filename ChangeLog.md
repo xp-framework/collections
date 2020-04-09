@@ -3,6 +3,11 @@ Collections change log
 
 ## ?.?.? / ????-??-??
 
+## 8.0.2 / 2020-04-09
+
+* Implemented RFC #335: Remove deprecated key/value pair annotation syntax
+  (@thekid)
+
 ## 8.0.1 / 2019-12-01
 
 * Made compatible with XP 10 - @thekid
