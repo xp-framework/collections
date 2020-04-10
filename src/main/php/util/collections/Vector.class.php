@@ -1,7 +1,6 @@
 <?php namespace util\collections;
 
-use lang\IllegalArgumentException;
-use lang\IndexOutOfBoundsException;
+use lang\{IllegalArgumentException, IndexOutOfBoundsException};
 use util\Objects;
 
 /**

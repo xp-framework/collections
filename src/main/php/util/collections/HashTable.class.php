@@ -1,7 +1,6 @@
 <?php namespace util\collections;
 
-use lang\Generic;
-use lang\Value;
+use lang\{Generic, Value};
 use util\Objects;
 
 /**

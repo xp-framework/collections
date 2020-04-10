@@ -1,7 +1,7 @@
 <?php namespace util\collections\unittest;
  
-use util\collections\Stack;
 use lang\IndexOutOfBoundsException;
+use util\collections\Stack;
 
 class StackTest extends \unittest\TestCase {
   private $stack;

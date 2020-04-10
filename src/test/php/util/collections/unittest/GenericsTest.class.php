@@ -1,13 +1,7 @@
 <?php namespace util\collections\unittest;
 
-use util\collections\HashTable;
-use util\collections\HashSet;
-use util\collections\Vector;
-use util\collections\Stack;
-use util\collections\Queue;
-use util\collections\LRUBuffer;
-use lang\IllegalArgumentException;
-use lang\Value;
+use lang\{IllegalArgumentException, Value};
+use util\collections\{HashSet, HashTable, LRUBuffer, Queue, Stack, Vector};
 
 /**
  * TestCase

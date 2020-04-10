@@ -1,10 +1,7 @@
 <?php namespace util\collections\unittest;
 
-use util\collections\HashTable;
-use util\collections\HashSet;
-use util\collections\Vector;
-use lang\IndexOutOfBoundsException;
-use lang\IllegalArgumentException;
+use lang\{IllegalArgumentException, IndexOutOfBoundsException};
+use util\collections\{HashSet, HashTable, Vector};
 
 /**
  * TestCase

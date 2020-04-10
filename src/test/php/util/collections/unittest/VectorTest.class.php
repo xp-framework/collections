@@ -1,9 +1,7 @@
 <?php namespace util\collections\unittest;
 
-use lang\IllegalArgumentException;
-use lang\IndexOutOfBoundsException;
+use lang\{IllegalArgumentException, IndexOutOfBoundsException, Value};
 use util\collections\Vector;
-use lang\Value;
 
 /**
  * TestCase for vector class

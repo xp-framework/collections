@@ -1,11 +1,8 @@
 <?php namespace util\collections\unittest;
  
-use util\collections\HashTable;
-use util\collections\Pair;
-use lang\Value;
-use lang\IllegalArgumentException;
-use util\Money;
-use util\Currency;
+use lang\{IllegalArgumentException, Value};
+use util\{Currency, Money};
+use util\collections\{HashTable, Pair};
 
 /**
  * Test HashTable class

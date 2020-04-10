@@ -1,9 +1,8 @@
 <?php namespace util\collections\unittest;
  
-use util\Objects;
-use util\collections\Queue;
-use util\NoSuchElementException;
 use lang\IndexOutOfBoundsException;
+use util\{NoSuchElementException, Objects};
+use util\collections\Queue;
 
 class QueueTest extends \unittest\TestCase {
   private $queue;

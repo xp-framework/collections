@@ -1,8 +1,7 @@
 <?php namespace util\collections;
 
 use lang\IndexOutOfBoundsException;
-use util\NoSuchElementException;
-use util\Objects;
+use util\{NoSuchElementException, Objects};
 
 /**
  * A Last-In-First-Out (LIFO) stack of objects.
