@@ -1,8 +1,8 @@
 <?php namespace util\collections\unittest;
  
 use lang\{IllegalArgumentException, Value};
-use util\{Currency, Money};
 use util\collections\{HashTable, Pair};
+use util\{Currency, Money};
 
 /**
  * Test HashTable class
@@ -51,12 +51,12 @@ class HashTableTest extends \unittest\TestCase {
 
   /** @return lang.Value */
   protected function hashCodeCounter() {
-    return newinstance(Value::class, [], [
-      'invoked'   => 0,
-      'toString'  => function() { return 'Test'; },
-      'hashCode'  => function() { $this->invoked++; return 'Test'; },
-      'compareTo' => function($value) { return 0; }
-    ]);
+    return new class() implements Value {
+      public $invoked= 0;
+      public function toString() { return 'Test'; }
+      public function hashCode() { $this->invoked++; return 'Test'; }
+      public function compareTo($value) { return 0; }
+    };
   }
 
   #[@test, @values('fixtures')]
