@@ -1,9 +1,11 @@
 <?php namespace util\collections;
 
+use lang\Generic;
+
 /**
  * A set of objects
  */
-#[@generic(['self' => 'T'])]
+#[Generic(['self' => 'T'])]
 interface Set extends \ArrayAccess, \IteratorAggregate {
 
   /**
@@ -12,7 +14,7 @@ interface Set extends \ArrayAccess, \IteratorAggregate {
    * @param   T object
    * @return  bool TRUE if this set did not already contain the specified element. 
    */
-  #[@generic(['params' => 'T'])]
+  #[Generic(['params' => 'T'])]
   public function add($element);
 
   /**
@@ -21,7 +23,7 @@ interface Set extends \ArrayAccess, \IteratorAggregate {
    * @param   T element
    * @return  bool TRUE if this set contained the specified element. 
    */
-  #[@generic(['params' => 'T'])]
+  #[Generic(['params' => 'T'])]
   public function remove($element);
 
   /**
@@ -30,7 +32,7 @@ interface Set extends \ArrayAccess, \IteratorAggregate {
    * @param   T element
    * @return  bool TRUE if the set contains the specified element. 
    */
-  #[@generic(['params' => 'T'])]
+  #[Generic(['params' => 'T'])]
   public function contains($element);
 
   /**
@@ -59,7 +61,7 @@ interface Set extends \ArrayAccess, \IteratorAggregate {
    * @param   T[] elements
    * @return  bool TRUE if this set changed as a result of the call. 
    */
-  #[@generic(['params' => 'T[]'])]
+  #[Generic(['params' => 'T[]'])]
   public function addAll($elements);
 
   /**
@@ -67,7 +69,7 @@ interface Set extends \ArrayAccess, \IteratorAggregate {
    *
    * @return  T[] elements
    */
-  #[@generic(['return' => 'T[]'])]
+  #[Generic(['return' => 'T[]'])]
   public function toArray();
 
   /**

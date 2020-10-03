@@ -12,7 +12,7 @@ use util\Objects;
  * @test  xp://net.xp_framework.unittest.util.collections.BoxingTest
  * @see   xp://util.collections.Map
  */
-#[@generic(['self' => 'K, V', 'implements' => ['K, V']])]
+#[Generic(['self' => 'K, V', 'implements' => ['K, V']])]
 class HashTable implements Map, \lang\Value, \IteratorAggregate {
   protected $_buckets= [];
 
@@ -29,7 +29,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    * @param   K offset
    * @return  V
    */
-  #[@generic(['params' => 'K', 'return' => 'V'])]
+  #[Generic(['params' => 'K', 'return' => 'V'])]
   public function offsetGet($offset) {
     return $this->get($offset);
   }
@@ -40,7 +40,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    * @param   K offset
    * @param   V value
    */
-  #[@generic(['params' => 'K, V'])]
+  #[Generic(['params' => 'K, V'])]
   public function offsetSet($offset, $value) {
     $this->put($offset, $value);
   }
@@ -51,7 +51,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    * @param   K offset
    * @return  bool
    */
-  #[@generic(['params' => 'K'])]
+  #[Generic(['params' => 'K'])]
   public function offsetExists($offset) {
     return $this->containsKey($offset);
   }
@@ -61,7 +61,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    *
    * @param   K offset
    */
-  #[@generic(['params' => 'K'])]
+  #[Generic(['params' => 'K'])]
   public function offsetUnset($offset) {
     $this->remove($offset);
   }
@@ -77,7 +77,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    * @param   V value
    * @return  V the previous value associated with the key
    */
-  #[@generic(['params' => 'K, V', 'return' => 'V'])]
+  #[Generic(['params' => 'K, V', 'return' => 'V'])]
   public function put($key, $value) {
     $h= Objects::hashOf($key);
     if (!isset($this->_buckets[$h])) {
@@ -97,7 +97,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    * @param   K key
    * @return  V the value associated with the key
    */
-  #[@generic(['params' => 'K', 'return' => 'V'])]
+  #[Generic(['params' => 'K', 'return' => 'V'])]
   public function get($key) {
     $h= Objects::hashOf($key);
     return isset($this->_buckets[$h]) ? $this->_buckets[$h][1] : null; 
@@ -111,7 +111,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    * @param   K key
    * @return  V the previous value associated with the key
    */
-  #[@generic(['params' => 'K', 'return' => 'V'])]
+  #[Generic(['params' => 'K', 'return' => 'V'])]
   public function remove($key) {
     $h= Objects::hashOf($key);
     if (!isset($this->_buckets[$h])) {
@@ -157,7 +157,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    * @param   K key
    * @return  bool
    */
-  #[@generic(['params' => 'K'])]
+  #[Generic(['params' => 'K'])]
   public function containsKey($key) {
     $h= Objects::hashOf($key);
     return isset($this->_buckets[$h]);
@@ -169,7 +169,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    * @param   V value
    * @return  bool
    */
-  #[@generic(['params' => 'V'])]
+  #[Generic(['params' => 'V'])]
   public function containsValue($value) {
     if ($value instanceof Generic) {
       foreach (array_keys($this->_buckets) as $key) {
@@ -192,7 +192,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    *
    * @return  K[]
    */
-  #[@generic(['return' => 'K[]'])]
+  #[Generic(['return' => 'K[]'])]
   public function keys() {
     $keys= [];
     foreach ($this->_buckets as $key => $value) {
@@ -206,7 +206,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    *
    * @return  V[]
    */
-  #[@generic(['return' => 'V[]'])]
+  #[Generic(['return' => 'V[]'])]
   public function values() {
     $values= [];
     foreach ($this->_buckets as $key => $value) {

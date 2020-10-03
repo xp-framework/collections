@@ -1,6 +1,6 @@
 <?php namespace util\collections;
 
-use lang\IllegalArgumentException;
+use lang\{Generic, IllegalArgumentException};
 use util\Objects;
 
 /**
@@ -12,7 +12,7 @@ use util\Objects;
  * @test  xp://net.xp_framework.unittest.util.collections.LRUBufferTest
  * @test  xp://net.xp_framework.unittest.util.collections.GenericsTest
  */
-#[@generic(['self' => 'T'])]
+#[Generic(['self' => 'T'])]
 class LRUBuffer implements \lang\Value {
   protected
     $prefix    = 0,
@@ -45,7 +45,7 @@ class LRUBuffer implements \lang\Value {
    * @param   T element
    * @return  T victim
    */
-  #[@generic(['params' => 'T', 'return' => 'T'])]
+  #[Generic(['params' => 'T', 'return' => 'T'])]
   public function add($element) {
     $h= $this->prefix.Objects::hashOf($element);
     $this->_elements[$h]= $element;
@@ -66,7 +66,7 @@ class LRUBuffer implements \lang\Value {
    *
    * @param   T element
    */
-  #[@generic(['params' => 'T'])]
+  #[Generic(['params' => 'T'])]
   public function update($element) {
     $h= $this->prefix.Objects::hashOf($element);
     unset($this->_elements[$h]);

@@ -1,11 +1,11 @@
 <?php namespace util\collections;
 
-use lang\IndexOutOfBoundsException;
+use lang\{Generic, IndexOutOfBoundsException};
 
 /**
  * Interface for lists
  */
-#[@generic(['self' => 'T'])]
+#[Generic(['self' => 'T'])]
 interface IList extends \ArrayAccess, \IteratorAggregate {
 
   /**
@@ -28,7 +28,7 @@ interface IList extends \ArrayAccess, \IteratorAggregate {
    * @param   T element
    * @return  T the added element
    */
-  #[@generic(['params' => 'T', 'return' => 'T'])]
+  #[Generic(['params' => 'T', 'return' => 'T'])]
   public function add($element);
 
   /**
@@ -39,7 +39,7 @@ interface IList extends \ArrayAccess, \IteratorAggregate {
    * @param   T element
    * @return  T the element previously at the specified position.
    */
-  #[@generic(['params' => ', T', 'return' => 'T'])]
+  #[Generic(['params' => ', T', 'return' => 'T'])]
   public function set($index, $element);
 
   /**
@@ -49,7 +49,7 @@ interface IList extends \ArrayAccess, \IteratorAggregate {
    * @return  T
    * @throws  lang.IndexOutOfBoundsException if key does not exist
    */
-  #[@generic(['return' => 'T'])]
+  #[Generic(['return' => 'T'])]
   public function get($index);
  
   /**
@@ -60,7 +60,7 @@ interface IList extends \ArrayAccess, \IteratorAggregate {
    * @param   int index
    * @return  T the element that was removed from the list
    */
-  #[@generic(['return' => 'T'])]
+  #[Generic(['return' => 'T'])]
   public function remove($index);
 
   /**
@@ -69,7 +69,7 @@ interface IList extends \ArrayAccess, \IteratorAggregate {
    * @param   T element
    * @return  bool
    */
-  #[@generic(['params' => 'T'])]
+  #[Generic(['params' => 'T'])]
   public function contains($element);
 
   /**

@@ -1,6 +1,6 @@
 <?php namespace util\collections;
 
-use lang\Value;
+use lang\{Generic, Value};
 use util\Objects;
 
 /**
@@ -9,11 +9,11 @@ use util\Objects;
  * @see  xp://util.collections.HashTable
  * @test xp://net.xp_framework.unittest.util.collections.PairTest
  */
-#[@generic(['self' => 'K, V'])]
+#[Generic(['self' => 'K, V'])]
 class Pair implements Value {
-  #[@type('K')]
+  #[Type('K')]
   public $key;
-  #[@type('V')]
+  #[Type('V')]
   public $value;
 
   /**
@@ -22,7 +22,7 @@ class Pair implements Value {
    * @param  K key
    * @param  V value
    */
-  #[@generic(['params' => 'K, V'])]
+  #[Generic(['params' => 'K, V'])]
   public function __construct($key, $value) {
     $this->key= $key;
     $this->value= $value;
