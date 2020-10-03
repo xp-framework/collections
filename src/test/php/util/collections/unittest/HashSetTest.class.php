@@ -1,5 +1,6 @@
 <?php namespace util\collections\unittest;
  
+use unittest\Test;
 use util\collections\HashSet;
 
 /**
@@ -17,18 +18,18 @@ class HashSetTest extends \unittest\TestCase {
     $this->set= new HashSet();
   }
 
-  #[@test]
+  #[Test]
   public function initiallyEmpty() {
     $this->assertTrue($this->set->isEmpty());
   }
 
-  #[@test]
+  #[Test]
   public function equalsClone() {
     $this->set->add(new Name('green'));
     $this->assertTrue($this->set->equals(clone($this->set)));
   }
  
-  #[@test]
+  #[Test]
   public function equalsOtherSetWithSameContents() {
     $other= new HashSet();
     $this->set->add(new Name('color'));
@@ -36,7 +37,7 @@ class HashSetTest extends \unittest\TestCase {
     $this->assertTrue($this->set->equals($other));
   }
 
-  #[@test]
+  #[Test]
   public function doesNotEqualSetWithDifferentContents() {
     $other= new HashSet();
     $this->set->add(new Name('blue'));
@@ -44,14 +45,14 @@ class HashSetTest extends \unittest\TestCase {
     $this->assertFalse($this->set->equals($other));
   }
  
-  #[@test]
+  #[Test]
   public function add() {
     $this->set->add(new Name('green'));
     $this->assertFalse($this->set->isEmpty());
     $this->assertEquals(1, $this->set->size());
   }
 
-  #[@test]
+  #[Test]
   public function addAll() {
     $array= [new Name('one'), new Name('two'), new Name('three')];
     $this->set->addAll($array);
@@ -59,7 +60,7 @@ class HashSetTest extends \unittest\TestCase {
     $this->assertEquals(3, $this->set->size());
   }
 
-  #[@test]
+  #[Test]
   public function addAllUniques() {
     $array= [new Name('one'), new Name('one'), new Name('two')];
     $this->set->addAll($array);
@@ -67,7 +68,7 @@ class HashSetTest extends \unittest\TestCase {
     $this->assertEquals(2, $this->set->size());   // Name{"one"} and Name{"two"}
   }
 
-  #[@test]
+  #[Test]
   public function addAllReturnsWhetherSetHasChanged() {
     $array= [new Name('caffeine'), new Name('nicotine')];
     $this->assertTrue($this->set->addAll($array));
@@ -76,58 +77,58 @@ class HashSetTest extends \unittest\TestCase {
     $this->assertFalse($this->set->addAll([]));
   }
 
-  #[@test]
+  #[Test]
   public function contains() {
     $this->set->add(new Name('key'));
     $this->assertTrue($this->set->contains(new Name('key')));
     $this->assertFalse($this->set->contains(new Name('non-existant-key')));
   }
 
-  #[@test]
+  #[Test]
   public function addSameValueTwice() {
     $color= new Name('green');
     $this->assertTrue($this->set->add($color));
     $this->assertFalse($this->set->add($color));
   }
 
-  #[@test]
+  #[Test]
   public function remove() {
     $this->set->add(new Name('key'));
     $this->assertTrue($this->set->remove(new Name('key')));
     $this->assertTrue($this->set->isEmpty());
   }
 
-  #[@test]
+  #[Test]
   public function removeOnEmptySet() {
     $this->assertFalse($this->set->remove(new Name('irrelevant-set-is-empty-anyway')));
   }
 
-  #[@test]
+  #[Test]
   public function removeNonExistantObject() {
     $this->set->add(new Name('key'));
     $this->assertFalse($this->set->remove(new Name('non-existant-key')));
   }
 
-  #[@test]
+  #[Test]
   public function clear() {
     $this->set->add(new Name('key'));
     $this->set->clear();
     $this->assertTrue($this->set->isEmpty());
   }
 
-  #[@test]
+  #[Test]
   public function toArray() {
     $color= new Name('red');
     $this->set->add($color);
     $this->assertEquals([$color], $this->set->toArray());
   }
 
-  #[@test]
+  #[Test]
   public function toArrayOnEmptySet() {
     $this->assertEquals([], $this->set->toArray());
   }
 
-  #[@test]
+  #[Test]
   public function iteration() {
     $this->set->add(new Name('1'));
     $this->set->add(new Name('2'));
@@ -138,7 +139,7 @@ class HashSetTest extends \unittest\TestCase {
     }
   }
 
-  #[@test]
+  #[Test]
   public function stringRepresentation() {
     $this->set->add(new Name('color'));
     $this->set->add(new Name('price'));
@@ -148,7 +149,7 @@ class HashSetTest extends \unittest\TestCase {
     );
   }
 
-  #[@test]
+  #[Test]
   public function stringRepresentationOfEmptySet() {
     $this->assertEquals(
       'util.collections.HashSet[0] { }',
@@ -156,7 +157,7 @@ class HashSetTest extends \unittest\TestCase {
     );
   }
 
-  #[@test]
+  #[Test]
   public function addFunction() {
     $f= function() { return 'test'; };
     $this->set->add($f);

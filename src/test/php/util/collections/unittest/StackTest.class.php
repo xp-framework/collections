@@ -1,6 +1,7 @@
 <?php namespace util\collections\unittest;
  
 use lang\IndexOutOfBoundsException;
+use unittest\{Expect, Test};
 use util\collections\Stack;
 
 class StackTest extends \unittest\TestCase {
@@ -15,25 +16,25 @@ class StackTest extends \unittest\TestCase {
     $this->stack= new Stack();
   }
 
-  #[@test]
+  #[Test]
   public function initiallyEmpty() {
     $this->assertTrue($this->stack->isEmpty());
   }
 
-  #[@test]
+  #[Test]
   public function equalsClone() {
     $this->stack->push(new Name('green'));
     $this->assertTrue($this->stack->equals(clone($this->stack)));
   }
 
-  #[@test]
+  #[Test]
   public function push() {
     $this->stack->push(new Name('green'));
     $this->assertFalse($this->stack->isEmpty());
     $this->assertEquals(1, $this->stack->size());
   }
 
-  #[@test]
+  #[Test]
   public function pop() {
     $color= new Name('green');
     $this->stack->push($color);
@@ -41,7 +42,7 @@ class StackTest extends \unittest\TestCase {
     $this->assertTrue($this->stack->isEmpty());
   }
 
-  #[@test]
+  #[Test]
   public function peek() {
     $color= new Name('green');
     $this->stack->push($color);
@@ -49,7 +50,7 @@ class StackTest extends \unittest\TestCase {
     $this->assertFalse($this->stack->isEmpty());
   }
 
-  #[@test]
+  #[Test]
   public function search() {
     $color= new Name('green');
     $this->stack->push($color);
@@ -57,7 +58,7 @@ class StackTest extends \unittest\TestCase {
     $this->assertEquals(-1, $this->stack->search(new Name('non-existant')));
   }
 
-  #[@test]
+  #[Test]
   public function elementAt() {
     $this->stack->push(new Name('red'));
     $this->stack->push(new Name('green'));
@@ -68,12 +69,12 @@ class StackTest extends \unittest\TestCase {
     $this->assertEquals(new Name('red'), $this->stack->elementAt(2));
   }
 
-  #[@test, @expect(IndexOutOfBoundsException::class)]
+  #[Test, Expect(IndexOutOfBoundsException::class)]
   public function elementAtIllegalOffset() {
     $this->stack->elementAt(-1);
   }
 
-  #[@test]
+  #[Test]
   public function addFunction() {
     $f= function() { return 'test'; };
     $this->stack->push($f);

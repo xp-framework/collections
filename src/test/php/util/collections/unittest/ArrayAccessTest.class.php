@@ -1,6 +1,7 @@
 <?php namespace util\collections\unittest;
 
 use lang\{IllegalArgumentException, IndexOutOfBoundsException};
+use unittest\{Expect, Test};
 use util\collections\{HashSet, HashTable, Vector};
 
 /**
@@ -12,7 +13,7 @@ use util\collections\{HashSet, HashTable, Vector};
  */
 class ArrayAccessTest extends \unittest\TestCase {
 
-  #[@test]
+  #[Test]
   public function hashTableReadElement() {
     $c= new HashTable();
     $world= new Name('world');
@@ -20,19 +21,19 @@ class ArrayAccessTest extends \unittest\TestCase {
     $this->assertEquals($world, $c[new Name('hello')]);
   }
 
-  #[@test]
+  #[Test]
   public function hashTableReadNonExistantElement() {
     $c= new HashTable();
     $this->assertEquals(null, $c[new Name('hello')]);
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function hashTableReadIllegalElement() {
     $c= create('new util.collections.HashTable<string, lang.Value>()');
     $c[STDIN];
   }
 
-  #[@test]
+  #[Test]
   public function hashTableWriteElement() {
     $c= new HashTable();
     $world= new Name('world');
@@ -40,19 +41,19 @@ class ArrayAccessTest extends \unittest\TestCase {
     $this->assertEquals($world, $c->get(new Name('hello')));
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function hashTableWriteIllegalKey() {
     $c= create('new util.collections.HashTable<string, lang.Value>()');
     $c[STDIN]= new Name('Hello');
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function hashTableWriteIllegalValue() {
     $c= create('new util.collections.HashTable<string, lang.Value>()');
     $c['hello']= 'scalar';
   }
 
-  #[@test]
+  #[Test]
   public function hashTableTestElement() {
     $c= new HashTable();
     $c->put(new Name('hello'), new Name('world'));
@@ -60,7 +61,7 @@ class ArrayAccessTest extends \unittest\TestCase {
     $this->assertFalse(isset($c[new Name('world')]));
   }
 
-  #[@test]
+  #[Test]
   public function hashTableRemoveElement() {
     $c= new HashTable();
     $c->put(new Name('hello'), new Name('world'));
@@ -69,7 +70,7 @@ class ArrayAccessTest extends \unittest\TestCase {
     $this->assertFalse(isset($c[new Name('hello')]));
   }
 
-  #[@test]
+  #[Test]
   public function vectorReadElement() {
     $v= new Vector();
     $world= new Name('world');
@@ -77,13 +78,13 @@ class ArrayAccessTest extends \unittest\TestCase {
     $this->assertEquals($world, $v[0]);
   }
 
-  #[@test, @expect(IndexOutOfBoundsException::class)]
+  #[Test, Expect(IndexOutOfBoundsException::class)]
   public function vectorReadNonExistantElement() {
     $v= new Vector();
     $v[0];
   }
 
-  #[@test]
+  #[Test]
   public function vectorAddElement() {
     $v= new Vector();
     $world= new Name('world');
@@ -91,7 +92,7 @@ class ArrayAccessTest extends \unittest\TestCase {
     $this->assertEquals($world, $v[0]);
   }
   
-  #[@test]
+  #[Test]
   public function vectorWriteElement() {
     $v= new Vector([new Name('hello')]);
     $world= new Name('world');
@@ -99,19 +100,19 @@ class ArrayAccessTest extends \unittest\TestCase {
     $this->assertEquals($world, $v[0]);
   }
 
-  #[@test, @expect(IndexOutOfBoundsException::class)]
+  #[Test, Expect(IndexOutOfBoundsException::class)]
   public function vectorWriteElementBeyondBoundsKey() {
     $v= new Vector();
     $v[0]= new Name('world');
   }
 
-  #[@test, @expect(IndexOutOfBoundsException::class)]
+  #[Test, Expect(IndexOutOfBoundsException::class)]
   public function vectorWriteElementNegativeKey() {
     $v= new Vector();
     $v[-1]= new Name('world');
   }
 
-  #[@test]
+  #[Test]
   public function vectorTestElement() {
     $v= new Vector();
     $v[]= new Name('world');
@@ -120,7 +121,7 @@ class ArrayAccessTest extends \unittest\TestCase {
     $this->assertFalse(isset($v[-1]));
   }
 
-  #[@test]
+  #[Test]
   public function vectorRemoveElement() {
     $v= new Vector();
     $v[]= new Name('world');
@@ -128,7 +129,7 @@ class ArrayAccessTest extends \unittest\TestCase {
     $this->assertFalse(isset($v[0]));
   }
 
-  #[@test]
+  #[Test]
   public function vectorIsUsableInForeach() {
     $values= [new Name('hello'), new Name('world')];
     foreach (new Vector($values) as $i => $value) {
@@ -137,27 +138,27 @@ class ArrayAccessTest extends \unittest\TestCase {
     $this->assertEquals(sizeof($values)- 1, $i);
   }
 
-  #[@test]
+  #[Test]
   public function hashSetAddElement() {
     $s= new HashSet();
     $s[]= new Name('X');
     $this->assertTrue($s->contains(new Name('X')));
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function hashSetWriteElement() {
     $s= new HashSet();
     $s[0]= new Name('X');
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function hashSetReadElement() {
     $s= new HashSet();
     $s[]= new Name('X');
     $x= $s[0];
   }
 
-  #[@test]
+  #[Test]
   public function hashSetTestElement() {
     $s= new HashSet();
     $this->assertFalse(isset($s[new Name('X')]));
@@ -165,7 +166,7 @@ class ArrayAccessTest extends \unittest\TestCase {
     $this->assertTrue(isset($s[new Name('X')]));
   }
 
-  #[@test]
+  #[Test]
   public function hashSetRemoveElement() {
     $s= new HashSet();
     $s[]= new Name('X');
@@ -173,7 +174,7 @@ class ArrayAccessTest extends \unittest\TestCase {
     $this->assertFalse(isset($s[new Name('X')]));
   }
 
-  #[@test]
+  #[Test]
   public function hashSetUsableInForeach() {
     $s= new HashSet();
     $s->addAll([new Name('0'), new Name('1'), new Name('2')]);

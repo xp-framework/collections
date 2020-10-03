@@ -1,8 +1,9 @@
 <?php namespace util\collections\unittest;
  
 use lang\IndexOutOfBoundsException;
-use util\{NoSuchElementException, Objects};
+use unittest\{Expect, Test};
 use util\collections\Queue;
+use util\{NoSuchElementException, Objects};
 
 class QueueTest extends \unittest\TestCase {
   private $queue;
@@ -16,25 +17,25 @@ class QueueTest extends \unittest\TestCase {
     $this->queue= new Queue();
   }
       
-  #[@test]
+  #[Test]
   public function initiallyEmpty() {
     $this->assertTrue($this->queue->isEmpty());
   }
 
-  #[@test]
+  #[Test]
   public function equalsClone() {
     $this->queue->put(new Name('green'));
     $this->assertTrue($this->queue->equals(clone($this->queue)));
   }
 
-  #[@test]
+  #[Test]
   public function put() {
     $this->queue->put(new Name('green'));
     $this->assertFalse($this->queue->isEmpty());
     $this->assertEquals(1, $this->queue->size());
   }
 
-  #[@test]
+  #[Test]
   public function get() {
     $color= new Name('red');
     $this->queue->put($color);
@@ -42,12 +43,12 @@ class QueueTest extends \unittest\TestCase {
     $this->assertTrue($this->queue->isEmpty());
   }
 
-  #[@test, @expect(NoSuchElementException::class)]
+  #[Test, Expect(NoSuchElementException::class)]
   public function exceptionOnNoMoreElements() {
     $this->queue->get();
   }
 
-  #[@test]
+  #[Test]
   public function peek() {
     $color= new Name('blue');
     $this->queue->put($color);
@@ -55,12 +56,12 @@ class QueueTest extends \unittest\TestCase {
     $this->assertFalse($this->queue->isEmpty());
   }
 
-  #[@test]
+  #[Test]
   public function peekReturnsNullOnNoMoreElements() {
     $this->assertNull($this->queue->peek());
   }
 
-  #[@test]
+  #[Test]
   public function remove() {
     $color= new Name('blue');
     $this->queue->put($color);
@@ -68,7 +69,7 @@ class QueueTest extends \unittest\TestCase {
     $this->assertTrue($this->queue->isEmpty());
   }
 
-  #[@test]
+  #[Test]
   public function removeReturnsWhetherDeleted() {
     $color= new Name('pink');
     $this->queue->put($color);
@@ -79,7 +80,7 @@ class QueueTest extends \unittest\TestCase {
     $this->assertFalse($this->queue->remove(new Name('purple')));
   }
 
-  #[@test]
+  #[Test]
   public function elementAt() {
     $this->queue->put(new Name('red'));
     $this->queue->put(new Name('green'));
@@ -89,7 +90,7 @@ class QueueTest extends \unittest\TestCase {
     $this->assertEquals(new Name('blue'), $this->queue->elementAt(2));
   }
 
-  #[@test]
+  #[Test]
   public function iterativeUse() {
     $input= [new Name('red'), new Name('green'), new Name('blue')];
     
@@ -111,23 +112,23 @@ class QueueTest extends \unittest\TestCase {
     }
   }
 
-  #[@test, @expect(IndexOutOfBoundsException::class)]
+  #[Test, Expect(IndexOutOfBoundsException::class)]
   public function elementAtIllegalOffset() {
     $this->queue->elementAt(-1);
   }
 
-  #[@test, @expect(IndexOutOfBoundsException::class)]
+  #[Test, Expect(IndexOutOfBoundsException::class)]
   public function elementAtOffsetOutOfBounds() {
     $this->queue->put(new Name('one'));
     $this->queue->elementAt($this->queue->size() + 1);
   }
 
-  #[@test, @expect(IndexOutOfBoundsException::class)]
+  #[Test, Expect(IndexOutOfBoundsException::class)]
   public function elementAtEmptyList() {
     $this->queue->elementAt(0);
   }
 
-  #[@test]
+  #[Test]
   public function addFunction() {
     $f= function() { return 'test'; };
     $this->queue->put($f);

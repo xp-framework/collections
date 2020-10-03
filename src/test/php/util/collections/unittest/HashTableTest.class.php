@@ -1,6 +1,7 @@
 <?php namespace util\collections\unittest;
  
 use lang\{IllegalArgumentException, Value};
+use unittest\{Expect, Test, Values};
 use util\collections\{HashTable, Pair};
 use util\{Currency, Money};
 
@@ -59,202 +60,202 @@ class HashTableTest extends \unittest\TestCase {
     };
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function can_create($fixture, $pairs) {
     // Intentionally empty
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function map_is_initially_empty($fixture, $pairs) {
     $this->assertTrue($fixture->isEmpty());
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function map_size_is_initially_zero($fixture, $pairs) {
     $this->assertEquals(0, $fixture->size());
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function put($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
   }
 
-  #[@test, @values('variations')]
+  #[Test, Values('variations')]
   public function put_uses_hashCode_for_keys($fixture) {
     $object= $this->hashCodeCounter();
     $fixture->put($object, $this);
     $this->assertEquals(1, $object->invoked);
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function array_access_for_writing($fixture, $pairs) {
     $fixture[$pairs[0]->key]= $pairs[0]->value;
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function put_returns_previously_value($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $this->assertEquals($pairs[0]->value, $fixture->put($pairs[0]->key, $pairs[1]->value));
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function map_no_longer_empty_after_put($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $this->assertFalse($fixture->isEmpty());
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function map_size_no_longer_zero_after_put($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $this->assertEquals(1, $fixture->size());
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function put_illegal_type_in_key() {
     create('new util.collections.HashTable<string, util.collections.unittest.Name>')->put(5, new Name('hello'));
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function put_illegal_type_in_value() {
     create('new util.collections.HashTable<string, util.collections.unittest.Name>')->put('hello', $this);
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function put_raises_when_using_null_for_string_instance() {
     create('new util.collections.HashTable<string, util.collections.unittest.Name>')->put('test', null);
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function put_raises_when_using_null_for_arrays() {
     create('new util.collections.HashTable<string, var[]>')->put('test', null);
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function get_returns_null_when_key_does_not_exist($fixture, $pairs) {
     $this->assertNull($fixture->get($pairs[0]->key));
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function get_returns_previously_put_element($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $this->assertEquals($pairs[0]->value, $fixture->get($pairs[0]->key));
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function array_access_for_reading_non_existant($fixture, $pairs) {
     $this->assertNull($fixture[$pairs[0]->key]);
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function array_access_for_reading($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $this->assertEquals($pairs[0]->value, $fixture[$pairs[0]->key]);
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function get_illegal_type_in_argument() {
     create('new util.collections.HashTable<util.collections.unittest.Name, util.collections.unittest.Name>')->get($this);
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function containsKey_returns_false_when_element_does_not_exist($fixture, $pairs) {
     $this->assertFalse($fixture->containsKey($pairs[0]->key));
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function containsKey_returns_true_when_element_exists($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $this->assertTrue($fixture->containsKey($pairs[0]->key));
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function array_access_for_testing_non_existant($fixture, $pairs) {
     $this->assertFalse(isset($fixture[$pairs[0]->key]));
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function array_access_for_testing($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $this->assertTrue(isset($fixture[$pairs[0]->key]));
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function containsKey_illegal_type_in_argument() {
     create('new util.collections.HashTable<util.collections.unittest.Name, util.collections.unittest.Name>')->containsKey($this);
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function containsValue_returns_false_when_element_does_not_exist($fixture, $pairs) {
     $this->assertFalse($fixture->containsValue($pairs[0]->value));
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function containsValue_returns_true_when_element_exists($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $this->assertTrue($fixture->containsValue($pairs[0]->value));
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function containsValue_illegal_type_in_argument() {
     create('new util.collections.HashTable<util.collections.unittest.Name, util.collections.unittest.Name>')->containsValue($this);
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function remove_returns_previously_value($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $this->assertEquals($pairs[0]->value, $fixture->remove($pairs[0]->key));
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function remove_previously_put_element($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $fixture->remove($pairs[0]->key);
     $this->assertFalse($fixture->containsKey($pairs[0]->key));
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function array_access_for_removing($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     unset($fixture[$pairs[0]->key]);
     $this->assertFalse($fixture->containsKey($pairs[0]->key));
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function remove_non_existant_element($fixture, $pairs) {
     $fixture->remove($pairs[0]->key);
     $this->assertFalse($fixture->containsKey($pairs[0]->key));
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function array_access_for_removing_non_existant_element($fixture, $pairs) {
     unset($fixture[$pairs[0]->key]);
     $this->assertFalse($fixture->containsKey($pairs[0]->key));
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function remove_illegal_type_in_argument() {
     create('new util.collections.HashTable<util.collections.unittest.Name, util.collections.unittest.Name>')->remove($this);
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function equals_its_clone($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $this->assertEquals($fixture, clone $fixture);
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function equals_its_clone_when_empty($fixture, $pairs) {
     $this->assertEquals($fixture, clone $fixture);
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function does_not_equal_empty_map($fixture, $pairs) {
     $other= clone $fixture;
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $this->assertNotEquals($fixture, $other);
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function does_not_equal_map_with_different_elements($fixture, $pairs) {
     $other= clone $fixture;
     $fixture->put($pairs[0]->key, $pairs[0]->value);
@@ -262,38 +263,38 @@ class HashTableTest extends \unittest\TestCase {
     $this->assertNotEquals($fixture, $other);
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function clear($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $fixture->clear();
     $this->assertTrue($fixture->isEmpty());
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function keys_returns_empty_array_for_empty_map($fixture, $pairs) {
     $this->assertEquals([], $fixture->keys());
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function keys_returns_array_of_added_keys($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $fixture->put($pairs[1]->key, $pairs[1]->value);
     $this->assertEquals([$pairs[0]->key, $pairs[1]->key], $fixture->keys());
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function values_returns_empty_array_for_empty_map($fixture, $pairs) {
     $this->assertEquals([], $fixture->values());
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function values_returns_array_of_added_values($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $fixture->put($pairs[1]->key, $pairs[1]->value);
     $this->assertEquals([$pairs[0]->value, $pairs[1]->value], $fixture->values());
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function can_be_used_in_foreach($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $fixture->put($pairs[1]->key, $pairs[1]->value);
@@ -304,7 +305,7 @@ class HashTableTest extends \unittest\TestCase {
     $this->assertEquals([$pairs[0], $pairs[1]], $iterated);
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function can_be_used_in_foreach_with_empty_map($fixture, $pairs) {
     $iterated= [];
     foreach ($fixture as $pair) {
@@ -313,7 +314,7 @@ class HashTableTest extends \unittest\TestCase {
     $this->assertEquals([], $iterated);
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function iteration_invoked_twice($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $fixture->put($pairs[1]->key, $pairs[1]->value);
@@ -327,7 +328,7 @@ class HashTableTest extends \unittest\TestCase {
     $this->assertEquals([$pairs[0], $pairs[1], $pairs[0], $pairs[1]], $iterated);
   }
 
-  #[@test, @values('fixtures')]
+  #[Test, Values('fixtures')]
   public function second_iteration_with_break_statement($fixture, $pairs) {
     $fixture->put($pairs[0]->key, $pairs[0]->value);
     $fixture->put($pairs[1]->key, $pairs[1]->value);
@@ -341,7 +342,7 @@ class HashTableTest extends \unittest\TestCase {
     $this->assertEquals([$pairs[0], $pairs[1]], $iterated);
   }
 
-  #[@test]
+  #[Test]
   public function string_representation_of_empty_map() {
     $this->assertEquals(
       'util.collections.HashTable[0] { }',
@@ -349,7 +350,7 @@ class HashTableTest extends \unittest\TestCase {
     );
   }
 
-  #[@test]
+  #[Test]
   public function string_representation_of_map_with_contents() {
     $fixture= new HashTable();
     $fixture->put('hello', 'World');
@@ -363,7 +364,7 @@ class HashTableTest extends \unittest\TestCase {
     );
   }
 
-  #[@test]
+  #[Test]
   public function string_representation_of_generic_map() {
     $this->assertEquals(
       'util.collections.HashTable<string,util.collections.unittest.Name>[0] { }',

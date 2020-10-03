@@ -1,7 +1,7 @@
 <?php namespace util\collections\unittest;
 
 use lang\IllegalArgumentException;
-use unittest\TestCase;
+use unittest\{Expect, Test, TestCase};
 use util\Objects;
 use util\collections\LRUBuffer;
 
@@ -19,23 +19,23 @@ class LRUBufferTest extends TestCase {
     $this->buffer= new LRUBuffer(self::DEFAULT_SIZE);
   }
 
-  #[@test]
+  #[Test]
   public function initiallyEmpty() {
     $this->assertEquals(0, $this->buffer->numElements());
   }
 
-  #[@test]
+  #[Test]
   public function getSize() {
     $this->assertEquals(self::DEFAULT_SIZE, $this->buffer->getSize());
   }
 
-  #[@test]
+  #[Test]
   public function add() {
     $this->buffer->add(new Name('one'));
     $this->assertEquals(1, $this->buffer->numElements());
   }
 
-  #[@test]
+  #[Test]
   public function addReturnsVictim() {
 
     // We should be able to add at least as many as the buffer's size
@@ -70,13 +70,13 @@ class LRUBufferTest extends TestCase {
     }
   }
   
-  #[@test]
+  #[Test]
   public function bufferDoesNotGrowBeyondSize() {
     $this->addElements($this->buffer->getSize()+ 1);
     $this->assertEquals($this->buffer->getSize(), $this->buffer->numElements());
   }
  
-  #[@test]
+  #[Test]
   public function update() {
   
     // Fill the LRUBuffer until its size is reached
@@ -93,28 +93,28 @@ class LRUBufferTest extends TestCase {
     );
   }
 
-  #[@test]
+  #[Test]
   public function setSize() {
     $this->buffer->setSize(10);
     $this->assertEquals(10, $this->buffer->getSize());
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function illegalSize() {
     $this->buffer->setSize(0);
   }
 
-  #[@test]
+  #[Test]
   public function equalsClone() {
     $this->assertTrue($this->buffer->equals(clone $this->buffer));
   }
 
-  #[@test]
+  #[Test]
   public function doesNotEqualWithDifferentSize() {
     $this->assertFalse($this->buffer->equals(new LRUBuffer(self::DEFAULT_SIZE - 1)));
   }
  
-  #[@test]
+  #[Test]
   public function doesNotEqualWithSameElements() {
     $other= new LRUBuffer(self::DEFAULT_SIZE);
     with ($string= new Name('Hello')); {
@@ -124,7 +124,7 @@ class LRUBufferTest extends TestCase {
     $this->assertFalse($this->buffer->equals($other));
   }
 
-  #[@test]
+  #[Test]
   public function addFunction() {
     $f= function() { return 'test'; };
     $this->buffer->add($f);
