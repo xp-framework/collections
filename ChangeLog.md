@@ -3,6 +3,8 @@ Collections change log
 
 ## ?.?.? / ????-??-??
 
+* Fixed PHP 8.1 compatibility for `Traversable` subtypes - @thekid
+
 ## 10.0.0 / 2020-10-04
 
 * **Heads up: Requires XP 10.2 minimum!** - @thekid

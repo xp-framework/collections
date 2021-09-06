@@ -1,5 +1,7 @@
 <?php namespace util\collections;
 
+use ReturnTypeWillChange;
+use Traversable;
 use lang\{Generic, IllegalArgumentException, IndexOutOfBoundsException};
 use util\Objects;
 
@@ -27,7 +29,7 @@ class Vector implements IList, \lang\Value {
   }
 
   /** @return iterable */
-  public function getIterator() {
+  public function getIterator(): Traversable {
     foreach ($this->elements as $element) {
       yield $element;
     }
@@ -40,6 +42,7 @@ class Vector implements IList, \lang\Value {
    * @return  T
    */
   #[Generic(['return' => 'T'])]
+  #[ReturnTypeWillChange]
   public function offsetGet($offset) {
     return $this->get($offset);
   }
@@ -52,6 +55,7 @@ class Vector implements IList, \lang\Value {
    * @throws  lang.IllegalArgumentException if key is neither numeric (set) nor NULL (add)
    */
   #[Generic(['params' => ', T'])]
+  #[ReturnTypeWillChange]
   public function offsetSet($offset, $value) {
     if (null === $offset) {
       $this->add($value);
@@ -68,6 +72,7 @@ class Vector implements IList, \lang\Value {
    * @param   int offset
    * @return  bool
    */
+  #[ReturnTypeWillChange]
   public function offsetExists($offset) {
     return ($offset >= 0 && $offset < $this->size);
   }
@@ -77,6 +82,7 @@ class Vector implements IList, \lang\Value {
    *
    * @param   int offset
    */
+  #[ReturnTypeWillChange]
   public function offsetUnset($offset) {
     $this->remove($offset);
   }

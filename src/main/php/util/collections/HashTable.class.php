@@ -1,5 +1,7 @@
 <?php namespace util\collections;
 
+use ReturnTypeWillChange;
+use Traversable;
 use lang\{Generic, Value};
 use util\Objects;
 
@@ -17,7 +19,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
   protected $_buckets= [];
 
   /** @return iterable */
-  public function getIterator() {
+  public function getIterator(): Traversable {
     foreach ($this->_buckets as $bucket) {
       yield new Pair($bucket[0], $bucket[1]);
     }
@@ -30,6 +32,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    * @return  V
    */
   #[Generic(['params' => 'K', 'return' => 'V'])]
+  #[ReturnTypeWillChange]
   public function offsetGet($offset) {
     return $this->get($offset);
   }
@@ -41,6 +44,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    * @param   V value
    */
   #[Generic(['params' => 'K, V'])]
+  #[ReturnTypeWillChange]
   public function offsetSet($offset, $value) {
     $this->put($offset, $value);
   }
@@ -52,6 +56,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    * @return  bool
    */
   #[Generic(['params' => 'K'])]
+  #[ReturnTypeWillChange]
   public function offsetExists($offset) {
     return $this->containsKey($offset);
   }
@@ -62,6 +67,7 @@ class HashTable implements Map, \lang\Value, \IteratorAggregate {
    * @param   K offset
    */
   #[Generic(['params' => 'K'])]
+  #[ReturnTypeWillChange]
   public function offsetUnset($offset) {
     $this->remove($offset);
   }

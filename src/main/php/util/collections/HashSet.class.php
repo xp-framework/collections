@@ -1,5 +1,7 @@
 <?php namespace util\collections;
 
+use ReturnTypeWillChange;
+use Traversable;
 use lang\{Generic, IllegalArgumentException};
 use util\Objects;
 
@@ -15,7 +17,7 @@ class HashSet implements Set {
   protected $_elements= [];
 
   /** @return iterable */
-  public function getIterator() {
+  public function getIterator(): Traversable {
     foreach ($this->_elements as $element) {
       yield $element;
     }
@@ -27,6 +29,7 @@ class HashSet implements Set {
    * @param   int offset
    * @return  lang.Generic
    */
+  #[ReturnTypeWillChange]
   public function offsetGet($offset) {
     throw new IllegalArgumentException('Unsupported operation');
   }
@@ -39,6 +42,7 @@ class HashSet implements Set {
    * @throws  lang.IllegalArgumentException if key is neither numeric (set) nor NULL (add)
    */
   #[Generic(['params' => ', T'])]
+  #[ReturnTypeWillChange]
   public function offsetSet($offset, $value) {
      if (null === $offset) {
       $this->add($value);
@@ -54,6 +58,7 @@ class HashSet implements Set {
    * @return  bool
    */
   #[Generic(['params' => 'T'])]
+  #[ReturnTypeWillChange]
   public function offsetExists($offset) {
     return $this->contains($offset);
   }
@@ -64,6 +69,7 @@ class HashSet implements Set {
    * @param   T offset
    */
   #[Generic(['params' => 'T'])]
+  #[ReturnTypeWillChange]
   public function offsetUnset($offset) {
     $this->remove($offset);
   }
