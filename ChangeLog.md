@@ -3,6 +3,8 @@ Collections change log
 
 ## ?.?.? / ????-??-??
 
+## 10.0.1 / 2021-09-06
+
 * Fixed PHP 8.1 compatibility for `Traversable` subtypes - @thekid
 
 ## 10.0.0 / 2020-10-04
