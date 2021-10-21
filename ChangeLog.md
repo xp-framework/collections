@@ -3,6 +3,10 @@ Collections change log
 
 ## ?.?.? / ????-??-??
 
+## 10.0.2 / 2021-10-21
+
+* Made compatible with XP 11 - @thekid
+
 ## 10.0.1 / 2021-09-06
 
 * Fixed PHP 8.1 compatibility for `Traversable` subtypes - @thekid
