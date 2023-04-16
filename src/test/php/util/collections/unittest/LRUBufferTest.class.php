@@ -1,48 +1,53 @@
 <?php namespace util\collections\unittest;
 
 use lang\IllegalArgumentException;
-use unittest\{Expect, Test, TestCase};
+use test\{Assert, Expect, Test};
 use util\Objects;
 use util\collections\LRUBuffer;
 
-class LRUBufferTest extends TestCase {
-  const DEFAULT_SIZE = 3;
+class LRUBufferTest {
+  const DEFAULT_SIZE= 3;
 
-  protected $buffer= null;
-  
   /**
-   * Setup method. Creates the buffer member
+   * Add a specified number of strings to the give buffer.
    *
-   * @return void
+   * @param   util.collections.LRUBuffer $buffer
+   * @param   int $num
    */
-  public function setUp() {
-    $this->buffer= new LRUBuffer(self::DEFAULT_SIZE);
+  private function addElements($buffer, $num) {
+    for ($i= 0; $i < $num; $i++) {
+      $buffer->add(new Name('item #'.$i));
+    }
   }
 
   #[Test]
   public function initiallyEmpty() {
-    $this->assertEquals(0, $this->buffer->numElements());
+    $buffer= new LRUBuffer(self::DEFAULT_SIZE);
+    Assert::equals(0, $buffer->numElements());
   }
 
   #[Test]
   public function getSize() {
-    $this->assertEquals(self::DEFAULT_SIZE, $this->buffer->getSize());
+    $buffer= new LRUBuffer(self::DEFAULT_SIZE);
+    Assert::equals(self::DEFAULT_SIZE, $buffer->getSize());
   }
 
   #[Test]
   public function add() {
-    $this->buffer->add(new Name('one'));
-    $this->assertEquals(1, $this->buffer->numElements());
+    $buffer= new LRUBuffer(self::DEFAULT_SIZE);
+    $buffer->add(new Name('one'));
+    Assert::equals(1, $buffer->numElements());
   }
 
   #[Test]
   public function addReturnsVictim() {
+    $buffer= new LRUBuffer(self::DEFAULT_SIZE);
 
     // We should be able to add at least as many as the buffer's size
     // elements to the LRUBuffer. Nothing should be deleted from it
     // during this loop.
-    for ($i= 0, $s= $this->buffer->getSize(); $i < $s; $i++) {
-      if (null === ($victim= $this->buffer->add(new Name('item #'.$i)))) continue;
+    for ($i= 0, $s= $buffer->getSize(); $i < $s; $i++) {
+      if (null === ($victim= $buffer->add(new Name('item #'.$i)))) continue;
       
       $this->fail(
         'Victim '.Objects::stringOf($victim).' when inserting item #'.($i + 1).'/'.$s, 
@@ -53,81 +58,78 @@ class LRUBufferTest extends TestCase {
     
     // The LRUBuffer is now "full". Next time we add something, the
     // element last recently used should be returned.
-    $this->assertEquals(
+    Assert::equals(
       new Name('item #0'), 
-      $this->buffer->add(new Name('last item'))
+      $buffer->add(new Name('last item'))
     );
   }
-  
-  /**
-   * Add a specified number of strings to the buffer.
-   *
-   * @param   int num
-   */
-  protected function addElements($num) {
-    for ($i= 0; $i < $num; $i++) {
-      $this->buffer->add(new Name('item #'.$i));
-    }
-  }
-  
+
   #[Test]
   public function bufferDoesNotGrowBeyondSize() {
-    $this->addElements($this->buffer->getSize()+ 1);
-    $this->assertEquals($this->buffer->getSize(), $this->buffer->numElements());
+    $buffer= new LRUBuffer(self::DEFAULT_SIZE);
+    $this->addElements($buffer, $buffer->getSize() + 1);
+    Assert::equals($buffer->getSize(), $buffer->numElements());
   }
  
   #[Test]
   public function update() {
+    $buffer= new LRUBuffer(self::DEFAULT_SIZE);
   
     // Fill the LRUBuffer until its size is reached
-    $this->addElements($this->buffer->getSize());
+    $this->addElements($buffer, $buffer->getSize());
     
     // Update the first item
-    $this->buffer->update(new Name('item #0'));
+    $buffer->update(new Name('item #0'));
     
     // Now the second item should be chosen the victim when adding 
     // another element
-    $this->assertEquals(
+    Assert::equals(
       new Name('item #1'), 
-      $this->buffer->add(new Name('last item'))
+      $buffer->add(new Name('last item'))
     );
   }
 
   #[Test]
   public function setSize() {
-    $this->buffer->setSize(10);
-    $this->assertEquals(10, $this->buffer->getSize());
+    $buffer= new LRUBuffer(self::DEFAULT_SIZE);
+    $buffer->setSize(10);
+    Assert::equals(10, $buffer->getSize());
   }
 
   #[Test, Expect(IllegalArgumentException::class)]
   public function illegalSize() {
-    $this->buffer->setSize(0);
+    $buffer= new LRUBuffer(self::DEFAULT_SIZE);
+    $buffer->setSize(0);
   }
 
   #[Test]
   public function equalsClone() {
-    $this->assertTrue($this->buffer->equals(clone $this->buffer));
+    $buffer= new LRUBuffer(self::DEFAULT_SIZE);
+    Assert::true($buffer->equals(clone $buffer));
   }
 
   #[Test]
   public function doesNotEqualWithDifferentSize() {
-    $this->assertFalse($this->buffer->equals(new LRUBuffer(self::DEFAULT_SIZE - 1)));
+    $buffer= new LRUBuffer(self::DEFAULT_SIZE);
+    Assert::false($buffer->equals(new LRUBuffer(self::DEFAULT_SIZE - 1)));
   }
  
   #[Test]
   public function doesNotEqualWithSameElements() {
+    $buffer= new LRUBuffer(self::DEFAULT_SIZE);
     $other= new LRUBuffer(self::DEFAULT_SIZE);
     with ($string= new Name('Hello')); {
       $other->add($string);
-      $this->buffer->add($string);
+      $buffer->add($string);
     }
-    $this->assertFalse($this->buffer->equals($other));
+    Assert::false($buffer->equals($other));
   }
 
   #[Test]
   public function addFunction() {
+    $buffer= new LRUBuffer(self::DEFAULT_SIZE);
     $f= function() { return 'test'; };
-    $this->buffer->add($f);
-    $this->assertEquals(1, $this->buffer->numElements());
+    $buffer->add($f);
+    Assert::equals(1, $buffer->numElements());
   }
 }
