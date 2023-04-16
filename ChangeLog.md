@@ -3,6 +3,8 @@ Collections change log
 
 ## ?.?.? / ????-??-??
 
+* Merged PR #4: Migrate to new testing library - @thekid
+
 ## 10.0.2 / 2021-10-21
 
 * Made compatible with XP 11 - @thekid
