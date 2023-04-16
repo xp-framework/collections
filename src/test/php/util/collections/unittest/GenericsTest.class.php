@@ -1,7 +1,8 @@
 <?php namespace util\collections\unittest;
 
 use lang\{IllegalArgumentException, Value};
-use unittest\{Expect, Test};
+use test\Assert;
+use test\{Expect, Test};
 use util\collections\{HashSet, HashTable, LRUBuffer, Queue, Stack, Vector};
 
 /**
@@ -14,11 +15,11 @@ use util\collections\{HashSet, HashTable, LRUBuffer, Queue, Stack, Vector};
  * @see      xp://util.collections.Queue
  * @see      xp://util.collections.LRUBuffer
  */
-class GenericsTest extends \unittest\TestCase {
+class GenericsTest {
 
   #[Test]
   public function differingGenericHashTablesNotEquals() {
-    $this->assertNotEquals(
+    Assert::notEquals(
       create('new util.collections.HashTable<lang.Value, lang.Value>'),
       create('new util.collections.HashTable<util.collections.unittest.Name, lang.Value>')
     );
@@ -26,7 +27,7 @@ class GenericsTest extends \unittest\TestCase {
 
   #[Test]
   public function sameGenericHashTablesAreEqual() {
-    $this->assertEquals(
+    Assert::equals(
       create('new util.collections.HashTable<util.collections.unittest.Name, lang.Value>'),
       create('new util.collections.HashTable<util.collections.unittest.Name, lang.Value>')
     );
@@ -34,7 +35,7 @@ class GenericsTest extends \unittest\TestCase {
 
   #[Test]
   public function differingGenericHashSetsNotEquals() {
-    $this->assertNotEquals(
+    Assert::notEquals(
       create('new util.collections.HashSet<lang.Value>'),
       create('new util.collections.HashSet<util.collections.unittest.Name>')
     );
@@ -42,7 +43,7 @@ class GenericsTest extends \unittest\TestCase {
 
   #[Test]
   public function sameGenericHashSetsAreEqual() {
-    $this->assertEquals(
+    Assert::equals(
       create('new util.collections.HashSet<util.collections.unittest.Name>'),
       create('new util.collections.HashSet<util.collections.unittest.Name>')
     );
@@ -50,7 +51,7 @@ class GenericsTest extends \unittest\TestCase {
 
   #[Test]
   public function differingGenericVectorsNotEquals() {
-    $this->assertNotEquals(
+    Assert::notEquals(
       create('new util.collections.Vector<lang.Value>'),
       create('new util.collections.Vector<util.collections.unittest.Name>')
     );
@@ -58,7 +59,7 @@ class GenericsTest extends \unittest\TestCase {
 
   #[Test]
   public function sameGenericVectorsAreEqual() {
-    $this->assertEquals(
+    Assert::equals(
       create('new util.collections.Vector<util.collections.unittest.Name>'),
       create('new util.collections.Vector<util.collections.unittest.Name>')
     );
@@ -66,7 +67,7 @@ class GenericsTest extends \unittest\TestCase {
 
   #[Test]
   public function differingGenericQueuesNotEquals() {
-    $this->assertNotEquals(
+    Assert::notEquals(
       create('new util.collections.Queue<lang.Value>'),
       create('new util.collections.Queue<util.collections.unittest.Name>')
     );
@@ -74,7 +75,7 @@ class GenericsTest extends \unittest\TestCase {
 
   #[Test]
   public function sameGenericQueuesAreEqual() {
-    $this->assertEquals(
+    Assert::equals(
       create('new util.collections.Queue<util.collections.unittest.Name>'),
       create('new util.collections.Queue<util.collections.unittest.Name>')
     );
@@ -82,7 +83,7 @@ class GenericsTest extends \unittest\TestCase {
 
   #[Test]
   public function differingGenericStacksNotEquals() {
-    $this->assertNotEquals(
+    Assert::notEquals(
       create('new util.collections.Stack<lang.Value>'),
       create('new util.collections.Stack<util.collections.unittest.Name>')
     );
@@ -90,7 +91,7 @@ class GenericsTest extends \unittest\TestCase {
 
   #[Test]
   public function sameGenericStacksAreEqual() {
-    $this->assertEquals(
+    Assert::equals(
       create('new util.collections.Stack<util.collections.unittest.Name>'),
       create('new util.collections.Stack<util.collections.unittest.Name>')
     );
@@ -98,7 +99,7 @@ class GenericsTest extends \unittest\TestCase {
 
   #[Test]
   public function differingGenericLRUBuffersNotEquals() {
-    $this->assertNotEquals(
+    Assert::notEquals(
       create('new util.collections.LRUBuffer<lang.Value>', [10]),
       create('new util.collections.LRUBuffer<util.collections.unittest.Name>', [10])
     );
@@ -106,7 +107,7 @@ class GenericsTest extends \unittest\TestCase {
 
   #[Test]
   public function sameGenericLRUBuffersAreEqual() {
-    $this->assertEquals(
+    Assert::equals(
       create('new util.collections.LRUBuffer<util.collections.unittest.Name>', [10]),
       create('new util.collections.LRUBuffer<util.collections.unittest.Name>', [10])
     );
@@ -124,7 +125,7 @@ class GenericsTest extends \unittest\TestCase {
 
   #[Test]
   public function createStringVector() {
-    $this->assertEquals(
+    Assert::equals(
       new Name('one'), 
       create('new util.collections.Vector<util.collections.unittest.Name>', [new Name('one')])->get(0)
     );
@@ -235,14 +236,14 @@ class GenericsTest extends \unittest\TestCase {
       $h->addAll([new Name('HELLO'), $this]);
     } catch (IllegalArgumentException $expected) {
     }
-    $this->assertTrue($h->isEmpty());
+    Assert::true($h->isEmpty());
   }
 
   #[Test]
   public function arrayAsKeyLookupWithMatchingKey() {
     with ($h= create('new util.collections.HashTable<string[], util.collections.unittest.Name>')); {
       $h->put(['hello'], new Name('World'));
-      $this->assertEquals(new Name('World'), $h->get(['hello']));
+      Assert::equals(new Name('World'), $h->get(['hello']));
     }
   }
 
@@ -250,7 +251,7 @@ class GenericsTest extends \unittest\TestCase {
   public function arrayAsKeyLookupWithMismatchingKey() {
     with ($h= create('new util.collections.HashTable<string[], util.collections.unittest.Name>')); {
       $h->put(['hello'], new Name('World'));
-      $this->assertNull($h->get(['world']));
+      Assert::null($h->get(['world']));
     }
   }
 
@@ -274,8 +275,8 @@ class GenericsTest extends \unittest\TestCase {
     $c= create('new util.collections.HashTable<float, string>');
     $c[0.1]= '1/10';
     $c[0.2]= '2/10';
-    $this->assertEquals('1/10', $c[0.1], '0.1');
-    $this->assertEquals('2/10', $c[0.2], '0.2');
+    Assert::equals('1/10', $c[0.1], '0.1');
+    Assert::equals('2/10', $c[0.2], '0.2');
   }
 
   /**
@@ -288,7 +289,7 @@ class GenericsTest extends \unittest\TestCase {
     $c= create('new util.collections.HashSet<float>');
     $c->add(0.1);
     $c->add(0.2);
-    $this->assertEquals([0.1, 0.2], $c->toArray());
+    Assert::equals([0.1, 0.2], $c->toArray());
   }
 
   /**
@@ -301,7 +302,7 @@ class GenericsTest extends \unittest\TestCase {
     $c= create('new util.collections.LRUBuffer<float>', $irrelevant= 10);
     $c->add(0.1);
     $c->add(0.2);
-    $this->assertEquals(2, $c->numElements());
+    Assert::equals(2, $c->numElements());
   }
 
   /**
@@ -313,7 +314,7 @@ class GenericsTest extends \unittest\TestCase {
   public function primitiveInHashTableToString() {
     $c= create('new util.collections.HashTable<string, string>');
     $c->put('hello', 'World');
-    $this->assertNotEquals('', $c->toString());
+    Assert::notEquals('', $c->toString());
   }
 
   /**
@@ -325,7 +326,7 @@ class GenericsTest extends \unittest\TestCase {
   public function primitiveInHashSetToString() {
     $c= create('new util.collections.HashSet<string>');
     $c->add('hello');
-    $this->assertNotEquals('', $c->toString());
+    Assert::notEquals('', $c->toString());
   }
 
   /**
@@ -337,6 +338,6 @@ class GenericsTest extends \unittest\TestCase {
   public function primitiveInVectorToString() {
     $c= create('new util.collections.Vector<string>');
     $c->add('hello');
-    $this->assertNotEquals('', $c->toString());
+    Assert::notEquals('', $c->toString());
   }
 }

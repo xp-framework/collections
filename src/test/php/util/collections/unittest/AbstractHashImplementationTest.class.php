@@ -1,6 +1,7 @@
 <?php namespace util\collections\unittest;
- 
-use unittest\{Test, TestCase};
+
+use test\Assert;
+use test\{Test, TestCase};
 use util\collections\HashImplementation;
 
 
@@ -9,12 +10,13 @@ use util\collections\HashImplementation;
  *
  * @see  xp://util.collections.HashImplementation
  */
-abstract class AbstractHashImplementationTest extends TestCase {
+abstract class AbstractHashImplementationTest {
   protected $fixture;
 
   /**
    * Initializes fixture
    */
+  #[Before]
   public function setUp() {
     $this->fixture= $this->newFixture();
   }
@@ -31,7 +33,7 @@ abstract class AbstractHashImplementationTest extends TestCase {
    */
   #[Test]
   public function hashof_returns_non_empty_string_for_empty_input() {
-    $this->assertNotEquals('', $this->fixture->hashOf(''));
+    Assert::notEquals('', $this->fixture->hashOf(''));
   }
 
   /**
@@ -39,6 +41,6 @@ abstract class AbstractHashImplementationTest extends TestCase {
    */
   #[Test]
   public function hashof_returns_non_empty_string_for_non_empty_input() {
-    $this->assertNotEquals('', $this->fixture->hashOf('Test'));
+    Assert::notEquals('', $this->fixture->hashOf('Test'));
   }
 }

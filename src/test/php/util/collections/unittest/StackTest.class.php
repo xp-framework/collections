@@ -1,83 +1,81 @@
 <?php namespace util\collections\unittest;
- 
+
 use lang\IndexOutOfBoundsException;
-use unittest\{Expect, Test};
+use test\{Assert, Expect, Test};
 use util\collections\Stack;
 
-class StackTest extends \unittest\TestCase {
-  private $stack;
-  
-  /**
-   * Setup method. Creates the Stack member
-   *
-   * @return void
-   */
-  public function setUp() {
-    $this->stack= new Stack();
-  }
+class StackTest {
 
   #[Test]
   public function initiallyEmpty() {
-    $this->assertTrue($this->stack->isEmpty());
+    Assert::true((new Stack())->isEmpty());
   }
 
   #[Test]
   public function equalsClone() {
-    $this->stack->push(new Name('green'));
-    $this->assertTrue($this->stack->equals(clone($this->stack)));
+    $stack= new Stack();
+    $stack->push(new Name('green'));
+    Assert::true($stack->equals(clone($stack)));
   }
 
   #[Test]
   public function push() {
-    $this->stack->push(new Name('green'));
-    $this->assertFalse($this->stack->isEmpty());
-    $this->assertEquals(1, $this->stack->size());
+    $stack= new Stack();
+    $stack->push(new Name('green'));
+    Assert::false($stack->isEmpty());
+    Assert::equals(1, $stack->size());
   }
 
   #[Test]
   public function pop() {
+    $stack= new Stack();
     $color= new Name('green');
-    $this->stack->push($color);
-    $this->assertEquals($color, $this->stack->pop());
-    $this->assertTrue($this->stack->isEmpty());
+    $stack->push($color);
+    Assert::equals($color, $stack->pop());
+    Assert::true($stack->isEmpty());
   }
 
   #[Test]
   public function peek() {
+    $stack= new Stack();
     $color= new Name('green');
-    $this->stack->push($color);
-    $this->assertEquals($color, $this->stack->peek());
-    $this->assertFalse($this->stack->isEmpty());
+    $stack->push($color);
+    Assert::equals($color, $stack->peek());
+    Assert::false($stack->isEmpty());
   }
 
   #[Test]
   public function search() {
+    $stack= new Stack();
     $color= new Name('green');
-    $this->stack->push($color);
-    $this->assertEquals(0, $this->stack->search($color));
-    $this->assertEquals(-1, $this->stack->search(new Name('non-existant')));
+    $stack->push($color);
+    Assert::equals(0, $stack->search($color));
+    Assert::equals(-1, $stack->search(new Name('non-existant')));
   }
 
   #[Test]
   public function elementAt() {
-    $this->stack->push(new Name('red'));
-    $this->stack->push(new Name('green'));
-    $this->stack->push(new Name('blue'));
+    $stack= new Stack();
+    $stack->push(new Name('red'));
+    $stack->push(new Name('green'));
+    $stack->push(new Name('blue'));
 
-    $this->assertEquals(new Name('blue'), $this->stack->elementAt(0));
-    $this->assertEquals(new Name('green'), $this->stack->elementAt(1));
-    $this->assertEquals(new Name('red'), $this->stack->elementAt(2));
+    Assert::equals(new Name('blue'), $stack->elementAt(0));
+    Assert::equals(new Name('green'), $stack->elementAt(1));
+    Assert::equals(new Name('red'), $stack->elementAt(2));
   }
 
   #[Test, Expect(IndexOutOfBoundsException::class)]
   public function elementAtIllegalOffset() {
-    $this->stack->elementAt(-1);
+    $stack= new Stack();
+    $stack->elementAt(-1);
   }
 
   #[Test]
   public function addFunction() {
+    $stack= new Stack();
     $f= function() { return 'test'; };
-    $this->stack->push($f);
-    $this->assertEquals($f, $this->stack->elementAt(0));
+    $stack->push($f);
+    Assert::equals($f, $stack->elementAt(0));
   }
 }
