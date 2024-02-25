@@ -3,6 +3,7 @@ Collections change log
 
 ## ?.?.? / ????-??-??
 
+* Added PHP 8.4 to the test matrix - @thekid
 * Merged PR #4: Migrate to new testing library - @thekid
 
 ## 10.0.2 / 2021-10-21
